@@ -1,0 +1,1001 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     42063,        992]
+NotebookOptionsPosition[     37692,        879]
+NotebookOutlinePosition[     38345,        901]
+CellTagsIndexPosition[     38302,        898]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["CPE 212 Algorithm Design (1/61)",
+ FontWeight->"Bold"]], "Title",
+ CellChangeTimes->{{3.745549811322818*^9, 3.7455498252029133`*^9}}],
+
+Cell["Lab IV: Brute-force String Matching", "Subtitle",
+ CellChangeTimes->{{3.7455498359654613`*^9, 3.7455498564165688`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["String Matching", "Section",
+ CellChangeTimes->{{3.7455499055009155`*^9, 3.745549942896885*^9}, {
+  3.745549983088471*^9, 3.7455499850880013`*^9}}],
+
+Cell[TextData[{
+ "1. From the given algorithm template below, complete a brute-force \
+algorithm to search for a pattern in a string and analyze its worst-case \
+complexity. Name it ",
+ StyleBox["StrMatch",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ "[ ]"
+}], "Text",
+ CellChangeTimes->{{3.74554999346102*^9, 3.7455500473244977`*^9}, {
+  3.7455516249293404`*^9, 3.7455516252417693`*^9}, {3.7457074995479765`*^9, 
+  3.745707499985359*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Algorithm 1",
+  FontWeight->"Bold"],
+ " StrMatch"
+}], "Text",
+ CellFrame->{{0, 0}, {0.5, 0.5}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550620172615*^9, 3.7455506261868258`*^9}, 
+   3.74555125568647*^9}],
+
+Cell[TextData[{
+ StyleBox["Input",
+  FontWeight->"Bold"],
+ ":\tAn array ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"T", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"0", ".."}], "n"}], "-", "1"}], "]"}], TraditionalForm]]],
+ " of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " characters representing a text."
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455506974200797`*^9}, 
+   3.74555125568647*^9, {3.7455524252798157`*^9, 3.7455524257958975`*^9}, {
+   3.74555247742437*^9, 3.7455524782366867`*^9}}],
+
+Cell[TextData[{
+ " \tAn array ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"P", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"0", ".."}], "n"}], "-", "1"}], "]"}], TraditionalForm]]],
+ " of ",
+ Cell[BoxData[
+  FormBox["m", TraditionalForm]]],
+ " characters representing a pattern."
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.745550756078155*^9}, 
+   3.74555125568647*^9, {3.745552428623332*^9, 3.745552428997865*^9}}],
+
+Cell[TextData[{
+ StyleBox["Output",
+  FontWeight->"Bold"],
+ ": Index of the 1st character in the text that starts the first matched \
+substring, and -1 for unsuccessful search."
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507897609525`*^9}, 
+   3.74555125568647*^9, 3.745552387289302*^9, {3.745552417344702*^9, 
+   3.745552419219309*^9}, 3.7455526470849285`*^9}],
+
+Cell["", "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507914006433`*^9}, 
+   3.74555125568647*^9}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+   StyleBox["index",
+    FontSlant->"Italic"], "\[LeftArrow]", "0"}], 
+  TraditionalForm]]]], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.746012661242488*^9, 3.746012696974531*^9}, {
+   3.7460129561553555`*^9, 3.746012956157356*^9}, {3.7460132321281404`*^9, 
+   3.7460132329611883`*^9}}],
+
+Cell[TextData[{
+ StyleBox["for",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"i", "\[LeftArrow]", "0"}], TraditionalForm]]],
+ " ",
+ StyleBox["to",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "-", "m"}], TraditionalForm]]],
+ " ",
+ StyleBox["do",
+  FontWeight->"Bold"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.746012661242488*^9, 3.7460127355987406`*^9}, {
+   3.7460129505020323`*^9, 3.746012982773878*^9}, {3.7460130189529476`*^9, 
+   3.7460130219101167`*^9}, {3.7460131308503475`*^9, 3.74601315956499*^9}, 
+   3.7460133129767647`*^9}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{"          ", 
+   RowBox[{"j", "\[LeftArrow]", "0"}]}], 
+  TraditionalForm]], "SubsubitemParagraph"]], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.746012661242488*^9, 3.746012767463563*^9}, {
+   3.746013088219909*^9, 3.7460130985925026`*^9}}],
+
+Cell[TextData[{
+ StyleBox["while",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"j", "<", "m"}], TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"P", "[", "j", "]"}], "=", 
+    RowBox[{"T", "[", 
+     RowBox[{"i", "+", "j"}], "]"}]}], TraditionalForm]]],
+ " and",
+ StyleBox[" index = 0",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["do",
+  FontWeight->"Bold"]
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.746012661242488*^9, 3.74601279853734*^9}, {
+   3.746013079068386*^9, 3.746013083320629*^9}, {3.746069278321095*^9, 
+   3.746069303548538*^9}}],
+
+Cell["j \[LeftArrow] j + 1", "SubsubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, {
+   3.745550926148778*^9, 3.745550926148778*^9}, 3.74555125568647*^9, 
+   3.7460130770682716`*^9, {3.7460131184186363`*^9, 3.746013143501071*^9}, {
+   3.7460132010023603`*^9, 3.74601320100436*^9}}],
+
+Cell[TextData[{
+ StyleBox["if",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"j", "=", "m"}], TraditionalForm]]],
+ " ",
+ StyleBox["then",
+  FontWeight->"Bold"]
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, {
+   3.745550926148778*^9, 3.745550926148778*^9}, 3.74555125568647*^9, 
+   3.7460130770682716`*^9, {3.7460131184186363`*^9, 3.746013143501071*^9}, 
+   3.7460132010023603`*^9, {3.7460133589523945`*^9, 3.746013360933508*^9}}],
+
+Cell["index \[LeftArrow] i ", "SubsubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, {
+   3.745550926148778*^9, 3.745550926148778*^9}, 3.74555125568647*^9, 
+   3.7460130770682716`*^9, {3.7460131184186363`*^9, 3.746013143501071*^9}, 
+   3.7460132010023603`*^9, {3.7460133589523945`*^9, 3.7460134072961597`*^9}, {
+   3.7460698904301057`*^9, 3.746069890885132*^9}}],
+
+Cell[TextData[{
+ StyleBox["return",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox["index", TraditionalForm]],
+  FontSlant->"Italic"]
+}], "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.745550926148778*^9, 3.74555125568647*^9, 3.746013174742858*^9, {
+   3.746013412263444*^9, 3.7460134130534887`*^9}}],
+
+Cell["", "Text",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.7455513792846923`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell[TextData[StyleBox["\:0e40\:0e1b\:0e47\:0e19\:0e01\:0e32\:0e23\:0e27\:0e19\
+\:0e23\:0e2d\:0e1a\:0e04\:0e49\:0e19\:0e2b\:0e32\:0e15\:0e33\:0e41\:0e2b\:0e19\
+\:0e48\:0e07 string \:0e15\:0e31\:0e27\:0e41\:0e23\:0e01 \:0e17\:0e35\:0e48\
+\:0e21\:0e35 sub string \
+\:0e40\:0e2b\:0e21\:0e37\:0e2d\:0e19\:0e01\:0e31\:0e1a pattern \:0e17\:0e35\
+\:0e48\:0e15\:0e49\:0e2d\:0e07\:0e01\:0e32\:0e23\n\:0e42\:0e14\:0e22n \:0e04\
+\:0e37\:0e2d \:0e08\:0e33\:0e19\:0e27\:0e19 character \:0e02\:0e2d\:0e07 \
+string \:0e17\:0e35\:0e48\:0e15\:0e49\:0e2d\:0e07\:0e01\:0e32\:0e23\:0e40\
+\:0e02\:0e49\:0e32\:0e44\:0e1b\:0e04\:0e49\:0e19 \:0e2a\:0e48\:0e27\:0e19 m \
+\:0e04\:0e37\:0e2d \:0e08\:0e33\:0e19\:0e27\:0e19 character \
+\:0e02\:0e2d\:0e07 string pattern \n\n\:0e08\:0e30\:0e27\:0e19\:0e23\:0e2d\
+\:0e1a \:0e15\:0e31\:0e49\:0e07\:0e41\:0e15\:0e48\:0e15\:0e31\:0e27\:0e41\
+\:0e23\:0e01 \:0e08\:0e19\:0e16\:0e36\:0e07\:0e15\:0e31\:0e27\:0e17\:0e35\
+\:0e48 n-m \:0e40\:0e19\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01 \
+\:0e01\:0e32\:0e23\:0e27\:0e19\:0e2b\:0e32\:0e44\:0e1b\:0e16\:0e36\:0e07 \
+\:0e15\:0e31\:0e27\:0e17\:0e35\:0e48 n \:0e01\:0e47\:0e44\:0e21\:0e48\:0e21\
+\:0e35\:0e04\:0e48\:0e32\:0e2d\:0e30\:0e44\:0e23 \:0e40\:0e1e\:0e23\:0e32\
+\:0e30 \:0e08\:0e33\:0e19\:0e27\:0e19 character \
+\:0e17\:0e35\:0e48\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\
+\:0e1a\:0e44\:0e21\:0e48\:0e40\:0e1e\:0e35\:0e22\:0e07\:0e1e\:0e2d\n\:0e02\
+\:0e13\:0e30\:0e17\:0e35\:0e48\:0e27\:0e19\:0e23\:0e2d\:0e1a \:0e08\:0e30\
+\:0e21\:0e35\:0e01\:0e32\:0e23\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\
+\:0e35\:0e22\:0e1a \:0e27\:0e48\:0e32 character \
+\:0e17\:0e35\:0e48\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07\:0e19\:0e31\:0e49\
+\:0e19 \:0e15\:0e23\:0e07\:0e01\:0e31\:0e1a character \:0e02\:0e2d\:0e07 \
+string pattern \:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07\:0e17\:0e35\:0e48 j \
+\:0e2b\:0e23\:0e37\:0e2d\:0e44\:0e21\:0e48\n\:0e16\:0e49\:0e32\:0e15\:0e23\
+\:0e07\:0e01\:0e47\:0e08\:0e30 \:0e02\:0e22\:0e31\:0e1a\:0e15\:0e33\:0e41\
+\:0e2b\:0e19\:0e48\:0e07\:0e44\:0e1b\:0e40\:0e23\:0e37\:0e48\:0e2d\:0e22\:0e40\
+\:0e1e\:0e37\:0e48\:0e2d\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\
+\:0e22\:0e1a\:0e08\:0e19\:0e01\:0e27\:0e48\:0e32 \:0e08\:0e30\:0e04\:0e23\
+\:0e1a\:0e17\:0e38\:0e01 character \:0e02\:0e2d\:0e07 string pattern\n\n\
+\:0e43\:0e19\:0e02\:0e13\:0e30\:0e17\:0e35\:0e48\:0e40\:0e1b\:0e23\:0e35\:0e22\
+\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\:0e08\:0e30 check \:0e14\:0e49\:0e27\
+\:0e22\:0e27\:0e48\:0e32 index \:0e17\:0e35\:0e48\:0e08\:0e30\:0e40\:0e01\
+\:0e47\:0e1a\:0e04\:0e48\:0e32\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07 \
+\:0e21\:0e35\:0e04\:0e48\:0e32\:0e41\:0e25\:0e49\:0e27\:0e2b\:0e23\:0e37\:0e2d\
+\:0e22\:0e31\:0e07 \:0e2b\:0e32\:0e01\:0e22\:0e31\:0e07\:0e44\:0e21\:0e48\
+\:0e21\:0e35\:0e41\:0e2a\:0e14\:0e07\:0e27\:0e48\:0e32\:0e17\:0e35\:0e48\:0e1c\
+\:0e48\:0e32\:0e19\:0e21\:0e32\:0e22\:0e31\:0e07\:0e44\:0e21\:0e48\:0e40\:0e08\
+\:0e2d sub string \:0e17\:0e35\:0e48\:0e15\:0e23\:0e07\:0e01\:0e31\:0e1a \
+string pattern\n\:0e01\:0e47\:0e08\:0e30\:0e17\:0e33\:0e07\:0e32\:0e19\:0e15\
+\:0e48\:0e2d\:0e44\:0e1b \:0e2b\:0e32\:0e01\:0e21\:0e35\:0e41\:0e25\:0e49\
+\:0e27\:0e01\:0e47\:0e08\:0e30\:0e44\:0e21\:0e48\:0e17\:0e33\:0e07\:0e32\:0e19\
+\:0e2d\:0e30\:0e44\:0e23 \n\n\:0e2b\:0e32\:0e01\:0e40\:0e08\:0e2d sub string \
+\:0e17\:0e35\:0e48\:0e15\:0e23\:0e07\:0e01\:0e31\:0e1a string pattern \:0e41\
+\:0e25\:0e49\:0e27 \:0e04\:0e48\:0e32 j \:0e17\:0e35\:0e48\:0e44\:0e14\:0e49 \
+\:0e08\:0e30\:0e21\:0e35\:0e04\:0e48\:0e32\:0e40\:0e17\:0e48\:0e32\:0e01\:0e31\
+\:0e1a \:0e04\:0e48\:0e32 m \:0e08\:0e30\:0e43\:0e2b\:0e49 index \:0e08\:0e33\
+\:0e04\:0e48\:0e32\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07 \:0e02\:0e2d\
+\:0e07  character \:0e15\:0e31\:0e27\:0e41\:0e23\:0e01 \:0e02\:0e2d\:0e07 sub \
+string \:0e17\:0e35\:0e48\:0e15\:0e23\:0e07\:0e01\:0e31\:0e19",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, {
+   3.746069317777352*^9, 3.746069362014882*^9}, 3.7460699296693497`*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Evaluation", "Subsection",
+ CellChangeTimes->{{3.745061721730895*^9, 3.7450617238405895`*^9}}],
+
+Cell[TextData[StyleBox["\:0e01\:0e32\:0e23\:0e17\:0e33\:0e07\:0e32\:0e19\:0e08\
+\:0e30\:0e27\:0e19\:0e23\:0e2d\:0e1a n \:0e23\:0e2d\:0e1a \:0e41\:0e25\:0e30 \
+\:0e41\:0e15\:0e48\:0e25\:0e30\:0e23\:0e2d\:0e1a \:0e08\:0e30\:0e21\:0e35\
+\:0e01\:0e32\:0e23\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\
+\:0e1a\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e19\:0e49\:0e2d\:0e22 1 \:0e04\:0e23\
+\:0e31\:0e49\:0e07 \:0e41\:0e25\:0e30 \:0e2d\:0e22\:0e48\:0e32\:0e07\:0e21\
+\:0e32\:0e01 m \:0e04\:0e23\:0e31\:0e49\:0e07\n\:0e16\:0e49\:0e32\:0e44\:0e21\
+\:0e48\:0e21\:0e35 sub string \
+\:0e17\:0e35\:0e48\:0e15\:0e23\:0e07\:0e01\:0e31\:0e19 \:0e08\:0e30\:0e17\
+\:0e33\:0e43\:0e2b\:0e49\:0e21\:0e35\:0e01\:0e32\:0e23\:0e17\:0e33\:0e07\:0e32\
+\:0e19 n \:0e23\:0e2d\:0e1a \n\
+\:0e41\:0e15\:0e48\:0e43\:0e19\:0e17\:0e32\:0e07\:0e01\:0e25\:0e31\:0e1a\:0e01\
+\:0e31\:0e19 \:0e16\:0e49\:0e32\:0e21\:0e35 string \:0e17\:0e35\:0e48\:0e15\
+\:0e23\:0e07\:0e01\:0e31\:0e19 \:0e08\:0e30\:0e15\:0e49\:0e2d\:0e07\:0e17\
+\:0e33\:0e07\:0e32\:0e19\:0e16\:0e36\:0e07 nm \:0e04\:0e23\:0e31\:0e49\:0e07\n\
+\n\:0e0b\:0e36\:0e48\:0e07\:0e16\:0e36\:0e07\:0e41\:0e21\:0e49\:0e08\:0e30\
+\:0e40\:0e08\:0e2d sub string \
+\:0e17\:0e35\:0e48\:0e15\:0e23\:0e07\:0e01\:0e31\:0e19\:0e15\:0e31\:0e49\:0e07\
+\:0e41\:0e15\:0e48\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07\:0e41\:0e23\:0e01\
+ \:0e01\:0e47\:0e08\:0e30\:0e22\:0e31\:0e07\:0e27\:0e19\:0e23\:0e2d\:0e1a\
+\:0e44\:0e1b\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07\:0e2d\:0e37\:0e48\:0e19\
+\:0e46\:0e2d\:0e35\:0e01\:0e2d\:0e22\:0e39\:0e48\:0e14\:0e35 \:0e17\:0e33\
+\:0e43\:0e2b\:0e49\:0e21\:0e35 big o \:0e40\:0e1b\:0e47\:0e19 o(nm)\n\:0e2b\
+\:0e32\:0e01\:0e01\:0e33\:0e2b\:0e19\:0e14\:0e40\:0e07\:0e35\:0e48\:0e2d\:0e19\
+\:0e44\:0e02\:0e17\:0e35\:0e48 for loop \:0e43\:0e2b\:0e21\:0e48 \:0e43\:0e2b\
+\:0e49 \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e40\:0e08\:0e2d sub string \:0e17\
+\:0e35\:0e48\:0e15\:0e23\:0e07\:0e01\:0e31\:0e19\:0e41\:0e25\:0e49\:0e27 \
+\:0e43\:0e2b\:0e49\:0e2d\:0e2d\:0e01\:0e08\:0e32\:0e01\:0e01\:0e32\:0e23\:0e27\
+\:0e19\:0e23\:0e2d\:0e1a\:0e40\:0e25\:0e22 \:0e0b\:0e36\:0e48\:0e07\:0e17\
+\:0e33\:0e43\:0e2b\:0e49\:0e21\:0e35 best case \:0e40\:0e1b\:0e47\:0e19 o(m) \
+\:0e16\:0e49\:0e32\:0e40\:0e08\:0e2d\:0e17\:0e35\:0e48\:0e15\:0e33\:0e41\:0e2b\
+\:0e19\:0e48\:0e07\:0e41\:0e23\:0e01\n\:0e41\:0e15\:0e48 worst case \:0e01\
+\:0e47\:0e22\:0e31\:0e07\:0e04\:0e07\:0e40\:0e1b\:0e47\:0e19 o(nm) \:0e2d\
+\:0e22\:0e39\:0e48\:0e14\:0e35",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.745061740137463*^9, 3.745061742152867*^9}, 
+   3.746070415478137*^9}],
+
+Cell[TextData[{
+ "2. Write a program to implement the ",
+ StyleBox["StrMatch",
+  FontWeight->"Bold",
+  FontSlant->"Italic"],
+ "[ ] algorithm you design in the previous step. The program accepts a \
+pattern to search from the user input."
+}], "Text",
+ CellChangeTimes->{
+  3.7455512062918406`*^9, {3.745707459583576*^9, 3.745707489562282*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"T", "=", 
+   RowBox[{
+   "Characters", "[", "\"\<the quick brown fox jump over the lazy dog.\>\"", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"P", "=", 
+   RowBox[{"Characters", "[", "\"\<the\>\"", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StrMatch", "[", 
+    RowBox[{"T_", ",", "P_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "m", ",", "i", ",", "j", ",", "k", ",", "index"}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"n", "=", 
+       RowBox[{"Length", "[", "T", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"m", "=", 
+       RowBox[{"Length", "[", "P", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"index", "=", "0"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "\[LessEqual]", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"n", "-", "m"}], ")"}], "+", "1"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"j", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"k", "=", "i"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"j", "<=", "m"}], ")"}], "&&", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+               "P", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
+               "\[Equal]", 
+               RowBox[{
+               "T", "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}]}], 
+              ")"}], "&&", 
+             RowBox[{"(", 
+              RowBox[{"index", "\[Equal]", "0"}], ")"}]}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"j", "++"}], ";", "\[IndentingNewLine]", 
+             RowBox[{"k", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"j", "\[Equal]", 
+             RowBox[{"m", "+", "1"}]}], ",", 
+            RowBox[{
+             RowBox[{"index", "=", "i"}], ";"}]}], "]"}], ";"}], 
+         "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", "index", "]"}], ";"}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"StrMatch", "[", 
+  RowBox[{"T", ",", "P"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.7460099138143435`*^9, 3.7460099462451982`*^9}, {
+   3.7460099773359766`*^9, 3.7460100155821643`*^9}, 3.746010049089081*^9, {
+   3.746012611503643*^9, 3.746012613437753*^9}, {3.7460704646919518`*^9, 
+   3.7460707320712447`*^9}}],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{{3.7460707039706373`*^9, 3.746070732675279*^9}}]
+}, Open  ]],
+
+Cell["\<\
+3. Write an algorithm of the brute-force string matching that returns, for a \
+given pattern, the total number of matching substrings in a given text.\
+\>", "Text",
+ CellChangeTimes->{{3.7455514155111184`*^9, 3.7455514585183797`*^9}, {
+  3.745707462848434*^9, 3.7457074819171534`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Algorithm 2",
+  FontWeight->"Bold"],
+ " MultiStrMatch"
+}], "Text",
+ CellFrame->{{0, 0}, {0.5, 0.5}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550620172615*^9, 3.7455506261868258`*^9}, 
+   3.74555125568647*^9, {3.7455526122647133`*^9, 3.7455526150456004`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Input",
+  FontWeight->"Bold"],
+ ":\tAn array ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"T", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"0", ".."}], "n"}], "-", "1"}], "]"}], TraditionalForm]]],
+ " of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " characters representing a text."
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455506974200797`*^9}, 
+   3.74555125568647*^9, {3.7455524252798157`*^9, 3.7455524257958975`*^9}, {
+   3.74555247742437*^9, 3.7455524782366867`*^9}}],
+
+Cell[TextData[{
+ " \tAn array ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"P", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"0", ".."}], "n"}], "-", "1"}], "]"}], TraditionalForm]]],
+ " of ",
+ Cell[BoxData[
+  FormBox["m", TraditionalForm]]],
+ " characters representing a pattern."
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.745550756078155*^9}, 
+   3.74555125568647*^9, {3.745552428623332*^9, 3.745552428997865*^9}}],
+
+Cell[TextData[{
+ StyleBox["Output",
+  FontWeight->"Bold"],
+ ": Number of matched substrings, and -1 for unsuccessful search."
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507897609525`*^9}, 
+   3.74555125568647*^9, 3.745552387289302*^9, {3.745552417344702*^9, 
+   3.745552419219309*^9}, {3.7455526222782745`*^9, 3.745552639039958*^9}}],
+
+Cell["", "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507914006433`*^9}, 
+   3.74555125568647*^9}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+   StyleBox["count",
+    FontSlant->"Italic"], "\[LeftArrow]", "0"}], 
+  TraditionalForm]]]], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.7455528373190303`*^9}}],
+
+Cell[TextData[{
+ StyleBox["for",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"i", "\[LeftArrow]", "0"}], TraditionalForm]]],
+ " ",
+ StyleBox["to",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "-", "m"}], TraditionalForm]]],
+ " ",
+ StyleBox["do",
+  FontWeight->"Bold"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.745552852205857*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{"j", "\[LeftArrow]", "0"}], TraditionalForm]]]], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.7455528585328517`*^9}}],
+
+Cell[TextData[{
+ StyleBox["while",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"j", "<", "m"}], TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"P", "[", "j", "]"}], "=", 
+    RowBox[{"T", "[", 
+     RowBox[{"i", "+", "j"}], "]"}]}], TraditionalForm]]],
+ " ",
+ StyleBox["do",
+  FontWeight->"Bold"]
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.745552871701457*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{"j", "\[LeftArrow]", 
+   RowBox[{"j", "+", "1"}]}], TraditionalForm]]]], "SubsubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.7455528805589223`*^9}}],
+
+Cell[TextData[{
+ StyleBox["if",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"j", "=", "m"}], TraditionalForm]]],
+ " ",
+ StyleBox["then",
+  FontWeight->"Bold"]
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.7455528886037116`*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+   StyleBox["count",
+    FontSlant->"Italic"], " ", "\[LeftArrow]", " ", 
+   RowBox[{
+    StyleBox["count",
+     FontSlant->"Italic"], "+", "1"}]}], 
+  TraditionalForm]]]], "SubsubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.7455529055374136`*^9}}],
+
+Cell[TextData[{
+ StyleBox["return",
+  FontWeight->"Bold"],
+ " ",
+ Cell[BoxData[
+  FormBox["count", TraditionalForm]],
+  FontSlant->"Italic"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7455526596755004`*^9, 3.7455526776246376`*^9}, {
+   3.7455528069509397`*^9, 3.7455528069509397`*^9}, {3.7455528373190303`*^9, 
+   3.7455529130663447`*^9}}],
+
+Cell["", "Text",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.7455513792846923`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"T", "=", 
+   RowBox[{
+   "Characters", "[", "\"\<the quick brown fox jump over the lazy dog.\>\"", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"P", "=", 
+    RowBox[{"Characters", "[", "\"\<the\>\"", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MultiStrMatch", "[", 
+    RowBox[{"t_", ",", "p_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"m", ",", "n", ",", "i", ",", "j", ",", "k", ",", "count"}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"count", "=", "0"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"n", "=", 
+       RowBox[{"Length", "[", "t", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"m", "=", 
+       RowBox[{"Length", "[", "p", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "\[LessEqual]", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"n", "-", "m"}], ")"}], "+", "1"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"j", "=", "1"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"k", "=", "i"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"While", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"j", "<=", "m"}], " ", "&&", " ", 
+             RowBox[{
+              RowBox[{
+              "p", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
+              "\[Equal]", 
+              RowBox[{
+              "t", "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}]}]}],
+             ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"j", "++"}], ";", "\[IndentingNewLine]", 
+             RowBox[{"k", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"j", "\[Equal]", 
+             RowBox[{"m", "+", "1"}]}], ",", 
+            RowBox[{"count", "++"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+         "}"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", "count", "]"}], ";"}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"MultiStrMatch", "[", 
+  RowBox[{"T", ",", "P"}], "]"}]}], "Input",
+ CellChangeTimes->{
+  3.74589027658093*^9, {3.74589048097278*^9, 3.74589048219985*^9}, {
+   3.7458905693878365`*^9, 3.74589060982915*^9}, 3.745890792379591*^9, {
+   3.7458909351407566`*^9, 3.7458913364697065`*^9}, {3.7458914072757564`*^9, 
+   3.7458915430035195`*^9}, {3.7460072114047747`*^9, 3.746007355806034*^9}, {
+   3.7460073879078703`*^9, 3.746007546623948*^9}, {3.7460076125037165`*^9, 
+   3.746007662407571*^9}, {3.7460077232140484`*^9, 3.7460077830554714`*^9}, {
+   3.7460078140642447`*^9, 3.746007817439438*^9}, {3.7460078775818777`*^9, 
+   3.7460078848302927`*^9}, {3.746007948802952*^9, 3.7460079624887342`*^9}, {
+   3.74600814913441*^9, 3.7460081677374735`*^9}, 3.74600819844123*^9, {
+   3.7460082382795086`*^9, 3.746008264265995*^9}, {3.7460084722258897`*^9, 
+   3.746008543478965*^9}, {3.7460086067745852`*^9, 3.746008652267187*^9}, {
+   3.74600868780722*^9, 3.746008701883025*^9}, {3.746008896312146*^9, 
+   3.746008933515274*^9}, {3.7460091343777623`*^9, 3.74600914360329*^9}, {
+   3.7460098794013753`*^9, 3.7460098815564985`*^9}, {3.746011211041541*^9, 
+   3.7460112383081007`*^9}}],
+
+Cell[BoxData["2"], "Output",
+ CellChangeTimes->{{3.746007225974608*^9, 3.7460073561770554`*^9}, {
+   3.746007388554907*^9, 3.746007501096344*^9}, {3.746007533269184*^9, 
+   3.7460075470119705`*^9}, {3.746007613178755*^9, 3.7460076634726315`*^9}, {
+   3.7460077241191006`*^9, 3.7460077835474997`*^9}, {3.746007814733283*^9, 
+   3.746007817867462*^9}, {3.7460078781399097`*^9, 3.746007885569335*^9}, {
+   3.7460079521281414`*^9, 3.746007962877756*^9}, {3.7460081495964365`*^9, 
+   3.746008168036491*^9}, 3.746008199291279*^9, {3.7460082430177794`*^9, 
+   3.746008264690019*^9}, {3.746008472965932*^9, 3.746008505943818*^9}, {
+   3.746008538093657*^9, 3.746008549847329*^9}, {3.7460086077896433`*^9, 
+   3.746008653096235*^9}, {3.7460086885862646`*^9, 3.7460087022550464`*^9}, {
+   3.7460089000833616`*^9, 3.746008933945298*^9}, {3.746009136347875*^9, 
+   3.7460091441333203`*^9}, {3.7460112309996824`*^9, 3.746011238895134*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell[TextData[StyleBox["\:0e40\:0e1b\:0e47\:0e19\:0e01\:0e32\:0e23\:0e27\:0e19\
+\:0e23\:0e2d\:0e1a\:0e04\:0e49\:0e19\:0e2b\:0e32\:0e08\:0e33\:0e19\:0e27\:0e19\
+ string \:0e17\:0e35\:0e48\:0e40\:0e2b\:0e21\:0e37\:0e2d\:0e19\:0e01\:0e31\
+\:0e19 \:0e41\:0e15\:0e48\:0e08\:0e32\:0e01 pseudocode \:0e17\:0e35\:0e48\
+\:0e44\:0e14\:0e49\:0e21\:0e32 array \:0e02\:0e2d\:0e07 string \:0e40\:0e23\
+\:0e34\:0e48\:0e21\:0e17\:0e35\:0e48 0 \:0e41\:0e15\:0e48\:0e43\:0e19\:0e17\
+\:0e35\:0e48\:0e19\:0e35\:0e49 implement \:0e42\:0e14\:0e22\:0e43\:0e0a\:0e49 \
+list \:0e17\:0e35\:0e48\:0e21\:0e35 index \
+\:0e15\:0e31\:0e27\:0e41\:0e23\:0e01\:0e40\:0e23\:0e34\:0e21\:0e17\:0e35\:0e48\
+ 1 \:0e08\:0e36\:0e07\:0e21\:0e35\:0e01\:0e32\:0e23\:0e40\:0e1b\:0e25\:0e35\
+\:0e48\:0e22\:0e19\:0e41\:0e1b\:0e25\:0e07\:0e44\:0e1b\:0e40\:0e25\:0e47\:0e01\
+\:0e19\:0e49\:0e2d\:0e22\n\n\:0e08\:0e32\:0e01 code \:0e2b\:0e23\:0e37\:0e2d \
+pseudocode n \:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e08\:0e33\:0e19\:0e27\
+\:0e19 character\:0e02\:0e2d\:0e07 string \
+\:0e17\:0e35\:0e48\:0e40\:0e23\:0e32\:0e15\:0e49\:0e2d\:0e07\:0e01\:0e32\:0e23\
+\:0e08\:0e30\:0e04\:0e49\:0e19\:0e2b\:0e32 \:0e2a\:0e48\:0e27\:0e19 m \:0e08\
+\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e08\:0e33\:0e19\:0e27\:0e19 character \:0e02\
+\:0e2d\:0e07 string \:0e17\:0e35\:0e48\:0e40\:0e1b\:0e47\:0e19 pattern\n\
+\:0e42\:0e14\:0e22\:0e08\:0e30\:0e27\:0e19\:0e23\:0e2d\:0e1a\:0e08\:0e32\:0e01\
+ \:0e15\:0e31\:0e27\:0e17\:0e35\:0e48 1 \:0e16\:0e36\:0e07 (n-m)+1 \:0e40\
+\:0e17\:0e48\:0e32\:0e19\:0e31\:0e49\:0e19 \:0e40\:0e1e\:0e23\:0e32\:0e30\
+\:0e27\:0e48\:0e32 string pattern \:0e21\:0e35\:0e41\:0e04\:0e48 m \:0e15\
+\:0e31\:0e27 \:0e01\:0e32\:0e23\:0e17\:0e35\:0e48\:0e40\:0e23\:0e32 \:0e04\
+\:0e49\:0e19\:0e2b\:0e32\:0e44\:0e1b\:0e17\:0e35\:0e48\:0e15\:0e31\:0e27\:0e17\
+\:0e35\:0e48 n \:0e02\:0e2d\:0e07 string \:0e15\:0e49\:0e19\:0e41\:0e1a\:0e1a \
+\:0e08\:0e30\:0e17\:0e33\:0e43\:0e2b\:0e49\:0e44\:0e21\:0e48\:0e21\:0e35\:0e15\
+\:0e31\:0e27\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\
+\n\:0e41\:0e25\:0e30\:0e01\:0e32\:0e23\:0e17\:0e35\:0e48 \:0e15\:0e49\:0e2d\
+\:0e07 +1 \:0e40\:0e1e\:0e23\:0e32\:0e30\:0e27\:0e48\:0e32 list \:0e02\:0e2d\
+\:0e07 mathematica \:0e21\:0e35 index \:0e40\:0e23\:0e34\:0e48\:0e21\:0e15\
+\:0e49\:0e19\:0e17\:0e35\:0e48 1\n\n\
+\:0e41\:0e25\:0e49\:0e27\:0e08\:0e30\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\
+\:0e17\:0e35\:0e22\:0e1a\:0e17\:0e35\:0e25\:0e30 character \:0e02\:0e2d\:0e07 \
+string pattern \:0e16\:0e49\:0e32\:0e22\:0e31\:0e07\:0e40\:0e1b\:0e23\:0e35\
+\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\:0e44\:0e21\:0e48\:0e04\:0e23\:0e1a\
+ \:0e41\:0e25\:0e30 character \
+\:0e04\:0e39\:0e48\:0e17\:0e35\:0e48\:0e16\:0e39\:0e01\:0e40\:0e1b\:0e23\:0e35\
+\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\:0e22\:0e31\:0e07\:0e15\:0e23\:0e07\
+\:0e01\:0e31\:0e19\:0e2d\:0e22\:0e39\:0e48 \:0e08\:0e30\:0e40\:0e25\:0e37\
+\:0e48\:0e2d\:0e19\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07\:0e40\:0e1e\:0e37\
+\:0e48\:0e2d\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\
+\:0e44\:0e1b\:0e40\:0e23\:0e37\:0e48\:0e2d\:0e22\:0e46\n\:0e2b\:0e32\:0e01 \
+character \:0e17\:0e35\:0e48\:0e16\:0e39\:0e01\:0e40\:0e1b\:0e23\:0e35\:0e22\
+\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\:0e40\:0e2b\:0e21\:0e37\:0e2d\:0e19\:0e01\
+\:0e31\:0e19\:0e17\:0e38\:0e01\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07 \
+\:0e04\:0e48\:0e32 j \:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e2b\:0e25\:0e31\
+\:0e07\:0e08\:0e32\:0e01\:0e01\:0e32\:0e23\:0e27\:0e19\:0e23\:0e2d\:0e1a \
+\:0e08\:0e30\:0e21\:0e35 \:0e04\:0e48\:0e32 m+1 \
+\:0e2b\:0e25\:0e31\:0e07\:0e08\:0e32\:0e01\:0e19\:0e31\:0e49\:0e19\:0e08\:0e30\
+\:0e43\:0e0a\:0e49 count \:0e19\:0e31\:0e1a \:0e08\:0e33\:0e19\:0e27\:0e19\
+\:0e44\:0e27\:0e49\n\:0e40\:0e21\:0e37\:0e48\:0e2d\:0e40\:0e1b\:0e23\:0e35\
+\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\:0e08\:0e19\:0e04\:0e23\:0e1a\:0e08\
+\:0e30\:0e17\:0e33\:0e01\:0e32\:0e23 return count \:0e2b\:0e23\:0e37\:0e2d \
+\:0e08\:0e33 \:0e19\:0e27\:0e19 substrings \:0e17\:0e35\:0e48\:0e15\:0e23\
+\:0e07\:0e01\:0e31\:0e19 \n",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, {
+  3.7460100875762825`*^9, 3.7460101581773205`*^9}, {3.746010211113348*^9, 
+  3.746010253993801*^9}, {3.7460103547495637`*^9, 3.746010429127818*^9}, {
+  3.7460107611318073`*^9, 3.746010776592692*^9}, {3.7460109062641087`*^9, 
+  3.746010907743193*^9}, {3.7460110594718714`*^9, 3.7460110643111486`*^9}, {
+  3.7460111238075514`*^9, 3.7460111411515436`*^9}, {3.746011180168775*^9, 
+  3.7460111832269497`*^9}, {3.7460699497104964`*^9, 3.74607002215364*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Evaluation", "Subsection",
+ CellChangeTimes->{{3.745061721730895*^9, 3.7450617238405895`*^9}}],
+
+Cell[TextData[{
+ StyleBox["\:0e01\:0e32\:0e23\:0e17\:0e33\:0e07\:0e32\:0e19\:0e08\:0e30\:0e40\
+\:0e1b\:0e47\:0e19\:0e01\:0e32\:0e23\:0e27\:0e19\:0e23\:0e2d\:0e1a n-m \:0e23\
+\:0e2d\:0e1a \:0e43\:0e19\:0e41\:0e15\:0e48\:0e25\:0e30\:0e23\:0e2d\:0e1a\
+\:0e08\:0e30\:0e21\:0e35\:0e01\:0e32\:0e23\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\
+\:0e40\:0e17\:0e35\:0e22\:0e1a\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e19\:0e49\:0e2d\
+\:0e22 1 \:0e04\:0e23\:0e31\:0e49\:0e07 \:0e41\:0e25\:0e30 \:0e2d\:0e22\:0e48\
+\:0e32\:0e07\:0e21\:0e32\:0e01 m \:0e04\:0e23\:0e31\:0e49\:0e07\n\:0e17\:0e33\
+\:0e43\:0e2b\:0e49 worst case \
+\:0e02\:0e2d\:0e07\:0e01\:0e32\:0e23\:0e17\:0e33\:0e07\:0e32\:0e19\:0e40\:0e1b\
+\:0e47\:0e19 (n-m)m \:0e23\:0e2d\:0e1a \:0e2b\:0e23\:0e37\:0e2d\:0e21\:0e35 \
+big-o \:0e40\:0e1b\:0e47\:0e19 o(nm)\n\:0e16\:0e49\:0e32\:0e2b\:0e32\:0e01 n \
+\:0e41\:0e25\:0e30 m \:0e21\:0e35\:0e08\:0e33\:0e19\:0e27\:0e19\:0e17\:0e35\
+\:0e48\:0e21\:0e32\:0e01 \:0e08\:0e30\:0e17\:0e33\:0e43\:0e2b\:0e49\:0e01\
+\:0e32\:0e23\:0e17\:0e33\:0e07\:0e32\:0e19\:0e43\:0e0a\:0e49\:0e40\:0e27\:0e25\
+\:0e32\:0e19\:0e32\:0e19 \:0e41\:0e15\:0e48 code \:0e17\:0e35\:0e48\:0e44\
+\:0e14\:0e49\:0e40\:0e1b\:0e47\:0e19 \:0e08\:0e30\:0e07\:0e48\:0e32\:0e22\
+\:0e15\:0e48\:0e2d\:0e01\:0e32\:0e23\:0e40\:0e02\:0e49\:0e32\:0e43\:0e08 \
+\:0e40\:0e1b\:0e47\:0e19\:0e41\:0e19\:0e27\:0e04\:0e34\:0e14\:0e17\:0e35\:0e48\
+\:0e15\:0e23\:0e07\:0e44\:0e1b\:0e15\:0e23\:0e07\:0e21\:0e32\n",
+  FontSize->16],
+ "\n",
+ StyleBox["\:0e41\:0e25\:0e30 \:0e08\:0e32\:0e01 code \
+\:0e08\:0e30\:0e21\:0e35\:0e40\:0e1e\:0e34\:0e48\:0e21\:0e15\:0e31\:0e27\:0e41\
+\:0e1b\:0e23 k \:0e40\:0e02\:0e49\:0e32\:0e44\:0e1b \:0e40\:0e1e\:0e34\:0e48\
+\:0e21\:0e40\:0e1b\:0e47\:0e19 index \:0e43\:0e19\:0e01\:0e32\:0e23\:0e40\
+\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a character \:0e43\
+\:0e19 string \:0e17\:0e35\:0e48\:0e40\:0e23\:0e32\:0e44\:0e1b\:0e04\:0e49\
+\:0e19 \n\:0e40\:0e1e\:0e23\:0e32\:0e30\:0e40\:0e23\:0e32\:0e44\:0e21\:0e48\
+\:0e2a\:0e32\:0e23\:0e21\:0e32\:0e23\:0e16\:0e43\:0e0a\:0e49 i+j \:0e44\:0e14\
+\:0e49 \:0e40\:0e19\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01 index \:0e40\
+\:0e23\:0e34\:0e48\:0e21\:0e15\:0e49\:0e19\:0e17\:0e35\:0e48 1 \:0e17\:0e33\
+\:0e43\:0e2b\:0e49 i+j = 2 \:0e43\:0e19\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\
+\:0e07\:0e41\:0e23\:0e01\:0e08\:0e30\:0e44\:0e21\:0e48\:0e2a\:0e32\:0e21\:0e32\
+\:0e23\:0e16\:0e40\:0e1b\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a\
+\:0e44\:0e14\:0e49 \:0e0b\:0e36\:0e48\:0e07\:0e17\:0e33\:0e43\:0e2b\:0e49\
+\:0e40\:0e01\:0e34\:0e14\:0e02\:0e49\:0e2d\:0e1c\:0e34\:0e14\:0e1e\:0e25\:0e32\
+\:0e14\:0e44\:0e14\:0e49\n",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.745061740137463*^9, 3.745061742152867*^9}, 
+   3.7460112546710367`*^9, {3.746012362259387*^9, 3.746012391910083*^9}, 
+   3.74601255638949*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1350, 685},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (September 9, 2014)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"Report"}, "StandardReport.nb", CharacterEncoding -> 
+       "WindowsANSI"]]]}, Visible -> False, FrontEndVersion -> 
+  "10.0 for Microsoft Windows (64-bit) (September 9, 2014)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 157, 2, 99, "Title"],
+Cell[740, 26, 125, 1, 36, "Subtitle"],
+Cell[CellGroupData[{
+Cell[890, 31, 153, 2, 72, "Section"],
+Cell[1046, 35, 442, 11, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1513, 50, 268, 8, 47, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[1784, 60, 615, 19, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[2402, 81, 519, 16, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[2924, 99, 470, 10, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[3397, 111, 201, 4, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[3601, 117, 487, 11, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[4091, 130, 741, 24, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[4835, 156, 441, 9, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[5279, 167, 753, 26, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[6035, 195, 400, 6, 21, "SubsubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[6438, 203, 578, 16, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[7019, 221, 480, 7, 21, "SubsubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[7502, 230, 403, 11, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[7908, 243, 145, 3, 38, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8090, 251, 102, 1, 37, "Subsection"],
+Cell[8195, 254, 4043, 54, 242, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12275, 313, 100, 1, 37, "Subsection"],
+Cell[12378, 316, 2575, 36, 158, "Text"],
+Cell[14956, 354, 342, 9, 30, "Text"],
+Cell[CellGroupData[{
+Cell[15323, 367, 2926, 72, 461, "Input"],
+Cell[18252, 441, 96, 1, 40, "Output"]
+}, Open  ]],
+Cell[18363, 445, 295, 5, 30, "Text"],
+Cell[CellGroupData[{
+Cell[18683, 454, 323, 8, 47, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[19009, 464, 615, 19, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[19627, 485, 519, 16, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[20149, 503, 442, 9, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[20594, 514, 201, 4, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[20798, 520, 493, 11, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[21294, 533, 668, 23, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[21965, 558, 450, 8, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[22418, 568, 707, 23, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[23128, 593, 477, 9, 21, "SubsubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[23608, 604, 538, 16, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[24149, 622, 578, 14, 21, "SubsubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[24730, 638, 495, 13, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[25228, 653, 145, 3, 38, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25410, 661, 3591, 78, 461, "Input"],
+Cell[29004, 741, 926, 12, 40, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29979, 759, 102, 1, 37, "Subsection"],
+Cell[30084, 762, 4600, 62, 242, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34721, 829, 100, 1, 37, "Subsection"],
+Cell[34824, 832, 2828, 42, 156, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

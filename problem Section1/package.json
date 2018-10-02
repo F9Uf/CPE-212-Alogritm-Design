@@ -1,0 +1,11 @@
+{
+  "name": "problem-section1",
+  "version": "1.0.0",
+  "description": "timer for Lomuto VS Hoare",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "F9Uf",
+  "license": "ISC"
+}
