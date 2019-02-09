@@ -1,0 +1,470 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     19600,        461]
+NotebookOptionsPosition[     18415,        417]
+NotebookOutlinePosition[     18870,        434]
+CellTagsIndexPosition[     18827,        431]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["CPE 212 Algorithm Design (1/61)",
+ FontWeight->"Bold"]], "Title",
+ CellChangeTimes->{{3.749269828086603*^9, 3.7492698374677525`*^9}}],
+
+Cell["Lab VII: Merge Sort", "Subtitle",
+ CellChangeTimes->{{3.7492698414563417`*^9, 3.749269851617199*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Instruction", "Section",
+ CellChangeTimes->{{3.7492698929589806`*^9, 3.7492698961341343`*^9}, {
+  3.7492700706495695`*^9, 3.749270083726285*^9}}],
+
+Cell[TextData[{
+ "Implement the functions ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"mergeSort", "[", " ", "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"merge", "[", " ", "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " discussed in the class. The program accepts the list size ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", generates ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " random numbers between 0 to 999 for the list, and applies the Merge sort."
+}], "Text",
+ CellChangeTimes->{{3.749269971256316*^9, 3.7492700544797907`*^9}, {
+  3.749270092761901*^9, 3.7492700940428476`*^9}, {3.749270193167111*^9, 
+  3.7492701962046824`*^9}}],
+
+Cell["The sample are shown below.", "Text",
+ CellChangeTimes->{{3.749270102329238*^9, 3.749270113797291*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`n$$ = 5, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`n$$], 1, "Enter the number of elements"}}}, 
+    Typeset`size$$ = {288., {55.5, 61.5}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`n$$ = 1}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`A = RandomInteger[{1, 1000}, $CellContext`n$$]; 
+       Column[{"Elements of the array before sorting", 
+          Panel[
+           TableForm[$CellContext`A, TableDirections -> Row]], 
+          "Elements of the array after sorting", 
+          Panel[
+           TableForm[
+            $CellContext`mergeSort[$CellContext`A], TableDirections -> 
+            Row]]}]), 
+      "Specifications" :> {{{$CellContext`n$$, 1, 
+          "Enter the number of elements"}}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{497., {103., 109.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>(($CellContext`merge[
+         Pattern[$CellContext`lA, 
+          Blank[]], 
+         Pattern[$CellContext`rA, 
+          Blank[]]] := 
+       Module[{$CellContext`n1, $CellContext`n2, $CellContext`i = 
+          1, $CellContext`j = 1, $CellContext`k = 
+          1, $CellContext`B = {}}, $CellContext`n1 = 
+          Length[$CellContext`lA]; $CellContext`n2 = Length[$CellContext`rA]; 
+         While[
+           
+           And[$CellContext`i <= $CellContext`n1, $CellContext`j <= \
+$CellContext`n2], 
+           If[Part[$CellContext`lA, $CellContext`i] < 
+             Part[$CellContext`rA, $CellContext`j], $CellContext`B = 
+              Join[$CellContext`B, {
+                 Part[$CellContext`lA, $CellContext`i]}]; 
+             Increment[$CellContext`i], $CellContext`B = Join[$CellContext`B, {
+                 Part[$CellContext`rA, $CellContext`j]}]; 
+             Increment[$CellContext`j]]; Null]; 
+         If[$CellContext`i == $CellContext`n1 + 1, 
+           Table[$CellContext`B = Join[$CellContext`B, {
+               
+               Part[$CellContext`rA, $CellContext`k]}], {$CellContext`k, \
+$CellContext`j, $CellContext`n2}], 
+           Table[$CellContext`B = Join[$CellContext`B, {
+               
+               Part[$CellContext`lA, $CellContext`k]}], {$CellContext`k, \
+$CellContext`i, $CellContext`n1}]]; Return[$CellContext`B]; 
+         Null]; $CellContext`mergeSort[
+         Pattern[$CellContext`A, 
+          Blank[]]] := 
+       Module[{$CellContext`m, $CellContext`lA, $CellContext`rA}, 
+         If[Length[$CellContext`A] > 
+           1, $CellContext`m = 
+            Floor[Length[$CellContext`A]/
+              2]; $CellContext`lA = $CellContext`mergeSort[
+              Table[
+               
+               Part[$CellContext`A, $CellContext`i], {$CellContext`i, 
+                1, $CellContext`m}]]; $CellContext`rA = $CellContext`mergeSort[
+              Table[
+               
+               Part[$CellContext`A, $CellContext`i], {$CellContext`i, \
+$CellContext`m + 1, 
+                Length[$CellContext`A]}]]; Return[
+             $CellContext`merge[$CellContext`lA, $CellContext`rA]]; Null, 
+           Return[$CellContext`A]; Null]; Null]; Null); 
+     Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation and Discussion", "Section",
+ CellChangeTimes->{{3.7492701543531013`*^9, 3.7492701567588205`*^9}, {
+  3.749270213995553*^9, 3.7492702185042396`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mergeSort", "[", "list_", "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"listL", ",", "listR", ",", "mid", ",", "ans"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", "list", "]"}], "\[Equal]", "1"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"ans", "=", "list"}], ";"}], "\[IndentingNewLine]", "}"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"mid", "=", 
+          RowBox[{"Round", "[", 
+           RowBox[{
+            RowBox[{"Length", "[", "list", "]"}], "/", "2"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"listL", "=", 
+          RowBox[{"Drop", "[", 
+           RowBox[{"list", ",", 
+            RowBox[{"-", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"Length", "[", "list", "]"}], "-", "mid"}], ")"}]}]}], 
+           "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"listR", "=", 
+          RowBox[{"Drop", "[", 
+           RowBox[{"list", ",", "mid"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"listL", "=", 
+          RowBox[{"mergeSort", "[", "listL", "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"listR", "=", 
+          RowBox[{"mergeSort", "[", "listR", "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"ans", "=", 
+          RowBox[{"merge", "[", 
+           RowBox[{"listL", ",", "listR"}], "]"}]}], ";"}], 
+        "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", "ans", "]"}], ";"}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.749270166792433*^9, 3.7492701893317595`*^9}, {
+  3.749722526608082*^9, 3.7497225558386245`*^9}, {3.749722643033208*^9, 
+  3.749722694370865*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"merge", "[", 
+   RowBox[{"L_", ",", "R_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"i", ",", "l", ",", "r", ",", "list"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"i", "=", "1"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"l", "=", "1"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"r", "=", "1"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"list", "=", 
+      RowBox[{"Range", "[", 
+       RowBox[{"1", ",", 
+        RowBox[{
+         RowBox[{"Length", "[", "L", "]"}], "+", 
+         RowBox[{"Length", "[", "R", "]"}]}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"While", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"l", "\[LessEqual]", 
+         RowBox[{"Length", "[", "L", "]"}]}], "&&", 
+        RowBox[{"r", "\[LessEqual]", 
+         RowBox[{"Length", "[", "R", "]"}]}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "L", "\[LeftDoubleBracket]", "l", "\[RightDoubleBracket]"}], ">", 
+           RowBox[{
+           "R", "\[LeftDoubleBracket]", "r", "\[RightDoubleBracket]"}]}], ",",
+           "\[IndentingNewLine]", 
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"list", "\[LeftDoubleBracket]", 
+             RowBox[{"i", "++"}], "\[RightDoubleBracket]"}], "=", 
+            RowBox[{"R", "\[LeftDoubleBracket]", 
+             RowBox[{"r", "++"}], "\[RightDoubleBracket]"}]}], 
+           "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"list", "\[LeftDoubleBracket]", 
+             RowBox[{"i", "++"}], "\[RightDoubleBracket]"}], "=", 
+            RowBox[{"L", "\[LeftDoubleBracket]", 
+             RowBox[{"l", "++"}], "\[RightDoubleBracket]"}]}], 
+           "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}], 
+        "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{"l", "\[LessEqual]", 
+         RowBox[{"Length", "[", "L", "]"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"list", "\[LeftDoubleBracket]", 
+           RowBox[{"i", "++"}], "\[RightDoubleBracket]"}], "=", 
+          RowBox[{"L", "\[LeftDoubleBracket]", 
+           RowBox[{"l", "++"}], "\[RightDoubleBracket]"}]}], 
+         "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{"r", "\[LessEqual]", 
+         RowBox[{"Length", "[", "R", "]"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"list", "\[LeftDoubleBracket]", 
+           RowBox[{"i", "++"}], "\[RightDoubleBracket]"}], "=", 
+          RowBox[{"R", "\[LeftDoubleBracket]", 
+           RowBox[{"r", "++"}], "\[RightDoubleBracket]"}]}], 
+         "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", "list", "]"}], ";"}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.749270182870392*^9, 3.7492701872466574`*^9}, 
+   3.749722547240391*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Output", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}, {
+  3.7492702793342996`*^9, 3.749270280162221*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"list", "=", 
+   RowBox[{"{", 
+    RowBox[{"119", ",", "891", ",", "859", ",", "833", ",", "818"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"mergeSort", "[", "list", "]"}]}], "Input",
+ CellChangeTimes->{{3.7497226330808*^9, 3.7497226596586976`*^9}, {
+  3.749722699428339*^9, 3.7497227696585712`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"119", ",", "818", ",", "833", ",", "859", ",", "891"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.749722770183118*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell["\<\
+Explain here.\:0e2d\:0e31\:0e25\:0e01\:0e2d\:0e23\:0e34\:0e17\:0e36\:0e21 \
+merge sort \:0e08\:0e30\:0e17\:0e33\:0e01\:0e32\:0e23\:0e41\:0e1a\:0e48\:0e07\
+\:0e04\:0e23\:0e36\:0e48\:0e07\:0e44\:0e1b\:0e40\:0e23\:0e37\:0e48\:0e2d\:0e22\
+\:0e42\:0e14\:0e22\:0e01\:0e32\:0e23\:0e43\:0e0a\:0e49 recursive \:0e08\:0e19\
+\:0e01\:0e27\:0e48\:0e32\:0e08\:0e30\:0e41\:0e1a\:0e48\:0e07\:0e44\:0e21\:0e48\
+\:0e44\:0e14\:0e49 \:0e43\:0e0a\:0e49\:0e04\:0e33\:0e2a\:0e31\:0e48\:0e07 \
+Drop \:0e19\:0e33\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e43\:0e19 list \:0e02\
+\:0e49\:0e32\:0e07\:0e0b\:0e49\:0e32\:0e22\:0e41\:0e25\:0e30\:0e02\:0e27\:0e32\
+\:0e44\:0e1b\:0e43\:0e2a\:0e48 listL \:0e41\:0e25\:0e30 listR \:0e15\:0e32\
+\:0e21\:0e25\:0e33\:0e14\:0e31\:0e1a \:0e42\:0e14\:0e22\:0e01\:0e32\:0e23\
+\:0e41\:0e1a\:0e48\:0e07\:0e04\:0e23\:0e36\:0e48\:0e07\:0e08\:0e30\:0e43\:0e0a\
+\:0e49\:0e04\:0e33\:0e2a\:0e31\:0e48\:0e07 Round \:0e40\:0e1e\:0e37\:0e48\
+\:0e2d\:0e43\:0e2b\:0e49\:0e2b\:0e32\:0e23 2 \:0e2d\:0e2d\:0e01\:0e21\:0e32\
+\:0e40\:0e1b\:0e47\:0e19\:0e08\:0e33\:0e19\:0e27\:0e19\:0e40\:0e15\:0e47\:0e21\
+ \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e44\:0e14\:0e49 lisL \:0e41\:0e25\:0e30 \
+listR \:0e43\:0e2b\:0e49 recursive \:0e42\:0e14\:0e22\:0e01\:0e32\:0e23\:0e40\
+\:0e23\:0e35\:0e22\:0e01\:0e43\:0e0a\:0e49 mergeSort \:0e2d\:0e35\:0e01\:0e04\
+\:0e23\:0e31\:0e49\:0e07\:0e41\:0e15\:0e48\:0e43\:0e2a\:0e48\:0e41\:0e04\:0e48\
+ listL \:0e41\:0e25\:0e49\:0e27\:0e2d\:0e35\:0e01\:0e04\:0e23\:0e31\:0e49\
+\:0e07\:0e43\:0e2a\:0e48\:0e41\:0e04\:0e48 listR \:0e40\:0e1e\:0e37\:0e48\
+\:0e2d\:0e43\:0e2b\:0e49\:0e41\:0e1a\:0e48\:0e07\:0e25\:0e07\:0e44\:0e1b\:0e40\
+\:0e23\:0e37\:0e48\:0e2d\:0e22\:0e46  \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e40\
+\:0e2b\:0e25\:0e37\:0e2d 1 \:0e15\:0e31\:0e27\:0e01\:0e47\:0e44\:0e21\:0e48\
+\:0e15\:0e49\:0e2d\:0e07\:0e41\:0e1a\:0e48\:0e07 return \:0e04\:0e48\:0e32\
+\:0e02\:0e2d\:0e07\:0e15\:0e31\:0e27\:0e19\:0e31\:0e49\:0e19\:0e44\:0e1b\:0e44\
+\:0e14\:0e49\:0e40\:0e25\:0e22 \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e44\:0e14\
+\:0e49\:0e04\:0e48\:0e32\:0e02\:0e2d\:0e07 listL \:0e01\:0e31\:0e1a listR \
+\:0e41\:0e25\:0e49\:0e27\:0e01\:0e47\:0e17\:0e33\:0e01\:0e32\:0e23 merge \
+\:0e42\:0e14\:0e22\:0e40\:0e23\:0e35\:0e22\:0e01\:0e43\:0e0a\:0e49\:0e1f\:0e31\
+\:0e07\:0e01\:0e4c\:0e0a\:0e31\:0e19 merge \:0e43\:0e19\:0e1f\:0e31\:0e07\
+\:0e01\:0e4c\:0e0a\:0e31\:0e19 merge \:0e08\:0e30\:0e27\:0e19\:0e23\:0e2d\
+\:0e1a\:0e43\:0e2a\:0e48\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e02\:0e2d\:0e07\
+ listL \:0e01\:0e31\:0e1a listR \:0e42\:0e14\:0e22\:0e43\:0e2a\:0e48\:0e02\
+\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e17\:0e35\:0e48\:0e19\:0e49\:0e2d\:0e22\:0e01\
+\:0e27\:0e48\:0e32\:0e01\:0e48\:0e2d\:0e19\:0e44\:0e1b\:0e40\:0e23\:0e37\:0e48\
+\:0e2d\:0e22\:0e46 \:0e08\:0e19\:0e40\:0e21\:0e37\:0e48\:0e2d\:0e21\:0e35\
+\:0e21\:0e35\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e43\:0e19 list \
+\:0e43\:0e14\:0e2b\:0e21\:0e14\:0e01\:0e48\:0e2d\:0e19\:0e01\:0e47\:0e43\:0e2b\
+\:0e49\:0e27\:0e19\:0e23\:0e2d\:0e1a\:0e40\:0e01\:0e47\:0e1a\:0e02\:0e49\:0e2d\
+\:0e21\:0e39\:0e25\:0e17\:0e35\:0e48\:0e40\:0e2b\:0e25\:0e37\:0e2d\:0e42\:0e14\
+\:0e22\:0e17\:0e35\:0e48\:0e44\:0e21\:0e48\:0e15\:0e49\:0e2d\:0e07\:0e40\:0e1b\
+\:0e23\:0e35\:0e22\:0e1a\:0e40\:0e17\:0e35\:0e22\:0e1a \:0e40\:0e1e\:0e23\
+\:0e32\:0e30\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e03\:0e43\:0e19 List \
+\:0e19\:0e31\:0e49\:0e19\:0e16\:0e39\:0e01\:0e40\:0e23\:0e35\:0e22\:0e07\:0e21\
+\:0e32\:0e41\:0e25\:0e49\:0e27 \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e40\:0e2a\
+\:0e23\:0e47\:0e08\:0e41\:0e25\:0e49\:0e27\:0e01\:0e47 return list \:0e17\
+\:0e35\:0e48\:0e44\:0e14\:0e49 \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e1f\:0e31\
+\:0e07\:0e01\:0e4c\:0e0a\:0e31\:0e19 merge return list \:0e21\:0e32\:0e41\
+\:0e25\:0e49\:0e27\:0e43\:0e2b\:0e49\:0e17\:0e33\:0e01\:0e32\:0e23 return \
+\:0e04\:0e48\:0e32 list \:0e19\:0e31\:0e49\:0e19 \:0e0b\:0e36\:0e48\:0e07\
+\:0e04\:0e48\:0e32\:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e08\:0e30\:0e40\:0e1b\
+\:0e47\:0e19 list \
+\:0e17\:0e35\:0e48\:0e21\:0e35\:0e01\:0e32\:0e23\:0e40\:0e23\:0e35\:0e22\:0e07\
+\:0e01\:0e31\:0e19\:0e41\:0e25\:0e49\:0e27\
+\>", "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, 
+   3.749870429802273*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Evaluation", "Subsection",
+ CellChangeTimes->{{3.745061721730895*^9, 3.7450617238405895`*^9}}],
+
+Cell["\<\
+algorithm merge sort \:0e08\:0e30\:0e21\:0e35 bigO \:0e40\:0e1b\:0e47\:0e19 \
+nlog(n) \:0e42\:0e14\:0e22 log(n) \:0e21\:0e32\:0e08\:0e32\:0e01\:0e01\:0e32\
+\:0e23\:0e41\:0e1a\:0e48\:0e07\:0e04\:0e23\:0e36\:0e48\:0e07\:0e44\:0e1b\:0e40\
+\:0e23\:0e37\:0e48\:0e2d\:0e22\:0e46 \:0e41\:0e25\:0e30 n \:0e21\:0e32\:0e08\
+\:0e32\:0e01\:0e01\:0e32\:0e23 merge \:0e40\:0e1e\:0e37\:0e48\:0e2d\:0e40\
+\:0e23\:0e35\:0e22\:0e07\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25 \:0e43\:0e19 \
+merge sort \:0e08\:0e30\:0e44\:0e21\:0e48\:0e21\:0e35 worst case \:0e40\:0e19\
+\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01 \:0e44\:0e21\:0e48\:0e27\:0e48\
+\:0e32\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e40\:0e1b\:0e47\:0e19\:0e41\:0e1a\
+\:0e1a\:0e43\:0e14\:0e01\:0e47\:0e08\:0e30\:0e21\:0e35\:0e01\:0e32\:0e23\:0e17\
+\:0e33\:0e07\:0e32\:0e19\:0e40\:0e23\:0e47\:0e27\:0e40\:0e17\:0e48\:0e32\:0e40\
+\:0e14\:0e34\:0e21 \:0e02\:0e36\:0e49\:0e19\:0e2d\:0e22\:0e39\:0e48\:0e01\
+\:0e31\:0e1a\:0e1b\:0e23\:0e34\:0e21\:0e32\:0e13\:0e02\:0e2d\:0e07\:0e02\:0e49\
+\:0e2d\:0e21\:0e39\:0e25\:0e40\:0e17\:0e48\:0e32\:0e19\:0e31\:0e49\:0e19 \
+merge sort \:0e08\:0e30\:0e21\:0e35\:0e01\:0e32\:0e23\:0e43\:0e0a\:0e49\:0e1e\
+\:0e37\:0e49\:0e19\:0e17\:0e35\:0e48\:0e40\:0e1e\:0e34\:0e48\:0e21\:0e15\:0e2d\
+\:0e19 merge \:0e01\:0e25\:0e31\:0e1a\:0e44\:0e1b\
+\>", "Text",
+ CellChangeTimes->{{3.745061740137463*^9, 3.745061742152867*^9}, 
+   3.7498709052020864`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1920, 976},
+WindowMargins->{{-9, Automatic}, {Automatic, -9}},
+Magnification:>1.15 Inherited,
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (September 9, 2014)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "WindowsThai"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 157, 2, 114, "Title"],
+Cell[740, 26, 107, 1, 41, "Subtitle"],
+Cell[CellGroupData[{
+Cell[872, 31, 151, 2, 82, "Section"],
+Cell[1026, 35, 797, 23, 34, "Text"],
+Cell[1826, 60, 109, 1, 34, "Text"],
+Cell[1938, 63, 4111, 89, 273, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6086, 157, 169, 2, 82, "Section"],
+Cell[6258, 161, 2043, 51, 397, "Input"],
+Cell[8304, 214, 3463, 80, 683, "Input"],
+Cell[CellGroupData[{
+Cell[11792, 298, 147, 2, 42, "Subsection"],
+Cell[CellGroupData[{
+Cell[11964, 304, 347, 8, 67, "Input"],
+Cell[12314, 314, 158, 4, 44, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12521, 324, 102, 1, 42, "Subsection"],
+Cell[12626, 327, 4194, 57, 99, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16857, 389, 100, 1, 42, "Subsection"],
+Cell[16960, 392, 1415, 20, 56, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

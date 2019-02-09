@@ -72,22 +72,26 @@ function quickSelect1(arr, k) {
 }
 
 function main () {
-    var arrayA = [4, 1, 10, 8, 7, 12, 9, 2, 15];
-    var arrayB = [4, 1, 10, 8, 7, 12, 9, 2, 15];
+    var arrayA = [4, 1, 10, 8, 7, 12, 9, 2, 15, 45, 12, 90 ,34, 0, 92, 10080, 37, 86, 20];
+    var arrayB = [4, 1, 10, 8, 7, 12, 9, 2, 15, 45, 12, 90 ,34, 0, 92, 10080, 37, 86, 20];
     let key = 7;
+
+    var startTime, endTime = new Date();
 
     
 
     //    lomuto partition  //
-    console.time('lomuto-partition');
+    startTime = new Date();
     let y = quickSelect2(arrayB, key);
-    console.timeEnd('lomuto-partition');
-
-    //    hoare partition   //
-    console.time('hoare-partition');       
-    let x = quickSelect1(arrayA, key);
-    console.timeEnd('hoare-partition');
+    endTime = new Date() - startTime;
+    console.log('lomuto : ' + endTime);
     
+
+    //    hoare partition   //   
+    startTime = new Date();
+    let x = quickSelect1(arrayA, key);
+    endTime = new Date() - startTime;
+    console.log('hoare : ' + endTime);
 }
 
 main();

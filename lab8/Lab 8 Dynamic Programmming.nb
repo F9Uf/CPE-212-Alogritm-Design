@@ -1,0 +1,1359 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     53463,       1350]
+NotebookOptionsPosition[     51542,       1283]
+NotebookOutlinePosition[     51965,       1299]
+CellTagsIndexPosition[     51922,       1296]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["CPE 212 Algorithm Design (1/61)", "Title",
+ CellChangeTimes->{{3.749902365172721*^9, 3.749902372947708*^9}, {
+  3.749902417253372*^9, 3.749902421158117*^9}}],
+
+Cell["Lab VIII: Dynamic Programming", "Subtitle",
+ CellChangeTimes->{{3.749902429800607*^9, 3.7499024556875362`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Warshall\[CloseCurlyQuote]s Algorithm", "Section",
+ CellChangeTimes->{{3.7499026240634675`*^9, 3.749902632045968*^9}}],
+
+Cell["\<\
+Implement the Warshall\[CloseCurlyQuote]s algorithm that finds a transitive \
+closure of a random graph. The program performs the following steps:\
+\>", "Text",
+ CellChangeTimes->{{3.749902638700859*^9, 3.749902698172433*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Accept the number of vertices ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " between 2 and 10 from the user."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.7499027359306574`*^9, 3.749902752948743*^9}}],
+
+Cell[TextData[{
+ "Generate an adjacency matrix of a random graph with ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " vertices where the probability of having a directed edge from vertex ",
+ Cell[BoxData[
+  FormBox["i", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " to vertex ",
+ Cell[BoxData[
+  FormBox["j", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is 0.3."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.7499027359306574`*^9, 3.749902780164588*^9}, {
+  3.749902890797474*^9, 3.749902909310242*^9}}],
+
+Cell["\<\
+Run the Warshall\[CloseCurlyQuote]s algorithm to find the transitive closure \
+of the graph and print out the result.\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.7499027359306574`*^9, 3.749902780164588*^9}, {
+  3.749902890797474*^9, 3.749902938718856*^9}}]
+}, Open  ]],
+
+Cell["The sample of Warshall\[CloseCurlyQuote]s algorithm is shown below", \
+"Text",
+ CellChangeTimes->{{3.7499029719616013`*^9, 3.749902990392192*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`data$$ = {{0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {
+    0, 0, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 0, 1, 
+    0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0}}, $CellContext`n$$ = 4, $CellContext`step$$ = 0, Typeset`show$$ = True,
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`data$$], {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 
+       0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 
+       0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 
+       0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+       0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+       0}}}}, {{
+       Hold[$CellContext`n$$], 4}, 3, 10, 1}, {{
+       Hold[$CellContext`step$$], 0}, 0, 
+      Dynamic[$CellContext`n$$], 1}, {
+      Hold[
+       Dynamic[
+        Panel[
+         Grid[
+          Outer[Checkbox[
+            Dynamic[
+             Part[$CellContext`data$$, #, #2]], {0, 1}]& , 
+           Range[$CellContext`n$$], 
+           Range[$CellContext`n$$]]]]]], Manipulate`Dump`ThisIsNotAControl}}, 
+    Typeset`size$$ = {180., {69.5, 76.5}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`n$15077$$ = 0, $CellContext`step$15078$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`data$$ = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 
+         0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 
+         0, 0, 0, 0}}, $CellContext`n$$ = 4, $CellContext`step$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`n$$, $CellContext`n$15077$$, 0], 
+        Hold[$CellContext`step$$, $CellContext`step$15078$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Column[{
+         GraphPlot[
+          Take[$CellContext`data$$, $CellContext`n$$, $CellContext`n$$], 
+          VertexLabeling -> True], 
+         Row[{"Step ", $CellContext`step$$, "    ", 
+           MatrixForm[
+            Part[
+             $CellContext`Warshall[
+              
+              Take[$CellContext`data$$, $CellContext`n$$, $CellContext`n$$]], \
+$CellContext`step$$ + 1]]}]}], 
+      "Specifications" :> {{{$CellContext`data$$, {{0, 0, 0, 0, 0, 0, 0, 0, 0,
+           0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}}, ControlType -> 
+         None}, {{$CellContext`n$$, 4}, 3, 10, 1}, {{$CellContext`step$$, 0}, 
+         0, 
+         Dynamic[$CellContext`n$$], 1}, 
+        Dynamic[
+         Panel[
+          Grid[
+           Outer[Checkbox[
+             Dynamic[
+              Part[$CellContext`data$$, #, #2]], {0, 1}]& , 
+            Range[$CellContext`n$$], 
+            Range[$CellContext`n$$]]]]]}, 
+      "Options" :> {ContentSize -> {300, 300}}, "DefaultOptions" :> {}],
+     ImageSizeCache->{320., {244., 251.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>($CellContext`Warshall[
+        Pattern[$CellContext`A, 
+         Blank[]]] := 
+      Module[{$CellContext`R, $CellContext`i, $CellContext`j, $CellContext`k, \
+$CellContext`n}, $CellContext`n = Length[
+           Part[$CellContext`A, 1]]; $CellContext`R = Table[
+           Table[
+           0, {$CellContext`n}, {$CellContext`n}], {$CellContext`n + 1}]; 
+        Part[$CellContext`R, 1] = $CellContext`A; 
+        For[$CellContext`k = 1, $CellContext`k <= $CellContext`n, 
+          Increment[$CellContext`k], 
+          For[$CellContext`i = 1, $CellContext`i <= $CellContext`n, 
+            Increment[$CellContext`i], 
+            For[$CellContext`j = 1, $CellContext`j <= $CellContext`n, 
+              Increment[$CellContext`j], 
+              Part[$CellContext`R, $CellContext`k + 
+                 1, $CellContext`i, $CellContext`j] = BitOr[
+                 
+                 Part[$CellContext`R, $CellContext`k, $CellContext`i, \
+$CellContext`j], 
+                 BitAnd[
+                  
+                  Part[$CellContext`R, $CellContext`k, $CellContext`i, \
+$CellContext`k], 
+                  
+                  Part[$CellContext`R, $CellContext`k, $CellContext`k, \
+$CellContext`j]]]; Null]; Null]; Null]; Return[$CellContext`R]; Null]; 
+     Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}, {
+  3.7492702793342996`*^9, 3.749270280162221*^9}, {3.749903046594708*^9, 
+  3.7499030504066944`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"WarshallAlgorithm", "[", "A_", "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"k", ",", "i", ",", "j", ",", "n", ",", "R"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"R", "=", 
+       RowBox[{"{", "A", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"n", "=", 
+       RowBox[{"Length", "[", "A", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"k", "=", "1"}], ",", 
+        RowBox[{"k", "\[LessEqual]", "n"}], ",", 
+        RowBox[{"k", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"R", ",", 
+           RowBox[{
+           "R", "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}]}], 
+          "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"i", "=", "1"}], ",", 
+           RowBox[{"i", "\[LessEqual]", "n"}], ",", 
+           RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"For", "[", 
+             RowBox[{
+              RowBox[{"j", "=", "1"}], ",", 
+              RowBox[{"j", "\[LessEqual]", "n"}], ",", 
+              RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"R", "\[LeftDoubleBracket]", 
+                   RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                  "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+                 "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], "=", 
+                RowBox[{"BitOr", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    "R", "\[LeftDoubleBracket]", "k", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "j", 
+                   "\[RightDoubleBracket]"}], ",", 
+                  RowBox[{"BitAnd", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "R", "\[LeftDoubleBracket]", "k", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "k", 
+                    "\[RightDoubleBracket]"}], ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "R", "\[LeftDoubleBracket]", "k", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "k", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "j", 
+                    "\[RightDoubleBracket]"}]}], "]"}]}], "]"}]}], ";"}]}], 
+             "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+          "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", 
+       RowBox[{"R", "\[LeftDoubleBracket]", 
+        RowBox[{"n", "+", "1"}], "\[RightDoubleBracket]"}], "]"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.750544338897165*^9, 3.750544358334799*^9}, 
+   3.7505445270490727`*^9, {3.750544581051162*^9, 3.7505446329421296`*^9}, 
+   3.7505446991379156`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    InputFieldBox[Dynamic[$CellContext`n], Number], ";"}], 
+   RowBox[{"(*", "\"\<Run code on top before enter input n\>\"", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"mat", "=", 
+     RowBox[{"Range", "[", 
+      RowBox[{"1", ",", "n"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"For", "[", 
+     RowBox[{
+      RowBox[{"i", "=", "1"}], ",", 
+      RowBox[{"i", "\[LessEqual]", "n"}], ",", 
+      RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+         "mat", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], "=", 
+         RowBox[{"RandomChoice", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"6", ",", "4"}], "}"}], "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "1"}], "}"}]}], ",", "n"}], "]"}]}], ";", 
+        "\"\<First {} control the probabilities\>\""}], "\[IndentingNewLine]",
+        "}"}]}], "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "\"\<Matrix \>\"", ",", "n", ",", "\"\< members\>\"", ",", 
+      "\"\< \[LongRightArrow] \>\"", ",", 
+      RowBox[{"MatrixForm", "[", "mat", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "\"\<Warshall's Transitive Closure\>\"", ",", 
+      "\"\< \[LongRightArrow] \>\"", ",", 
+      RowBox[{"MatrixForm", "[", 
+       RowBox[{"WarshallAlgorithm", "[", "mat", "]"}], "]"}]}], "]"}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.7505447120646553`*^9, 3.750544719037054*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Matrix \"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "\<\" members\"\>", 
+   "\[InvisibleSpace]", "\<\" \[LongRightArrow] \"\>", "\[InvisibleSpace]", 
+   TagBox[
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0", "0", "1"},
+       {"0", "1", "1"},
+       {"0", "1", "1"}
+      },
+      GridBoxAlignment->{
+       "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+        "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]]}],
+  SequenceForm["Matrix ", 3, " members", " \[LongRightArrow] ", 
+   MatrixForm[{{0, 0, 1}, {0, 1, 1}, {0, 1, 1}}]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.750544733768896*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Warshall's Transitive Closure\"\>", 
+   "\[InvisibleSpace]", "\<\" \[LongRightArrow] \"\>", "\[InvisibleSpace]", 
+   TagBox[
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0", "1", "1"},
+       {"0", "1", "1"},
+       {"0", "1", "1"}
+      },
+      GridBoxAlignment->{
+       "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+        "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]]}],
+  SequenceForm["Warshall's Transitive Closure", " \[LongRightArrow] ", 
+   MatrixForm[{{0, 1, 1}, {0, 1, 1}, {0, 1, 1}}]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.750544733770897*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell[TextData[StyleBox["\tWarshall\[CloseCurlyQuote]s Algorithm \:0e40\:0e1b\
+\:0e47\:0e19 Alogorithm \
+\:0e17\:0e35\:0e48\:0e44\:0e27\:0e49\:0e2a\:0e33\:0e23\:0e27\:0e08\:0e27\:0e48\
+\:0e32 \:0e41\:0e15\:0e48\:0e25\:0e30 node \:0e1a\:0e19\:0e01\:0e23\:0e32\
+\:0e1f \:0e2a\:0e32\:0e23\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\
+\:0e17\:0e32\:0e07\:0e15\:0e48\:0e2d\:0e46\:0e44\:0e1b\:0e44\:0e14\:0e49\:0e16\
+\:0e36\:0e07 node \:0e44\:0e2b\:0e19\:0e1a\:0e49\:0e32\:0e07\n\:0e42\:0e14\
+\:0e22 Warshall\[CloseCurlyQuote]s Algorithm \:0e08\:0e30\:0e41\:0e1b\:0e25\
+\:0e07\:0e01\:0e23\:0e32\:0e1f\:0e21\:0e32\:0e40\:0e1b\:0e47\:0e19 Matrix \
+\:0e2b\:0e23\:0e37\:0e2d Array 2 \:0e21\:0e34\:0e15\:0e34\:0e17\:0e35\:0e48\
+\:0e21\:0e35\:0e02\:0e19\:0e32\:0e14 i \:0e41\:0e25\:0e30 j \
+\:0e40\:0e17\:0e48\:0e32\:0e01\:0e31\:0e19 \:0e42\:0e14\:0e22\:0e17\:0e35\
+\:0e48 A[i,j]\:0e08\:0e30\:0e1a\:0e2d\:0e01\:0e27\:0e48\:0e32 \n\:0e01\:0e23\
+\:0e32\:0e1f\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\:0e17\
+\:0e32\:0e07 \:0e08\:0e38\:0e14 i \:0e44\:0e1b j \:0e44\:0e14\:0e49\:0e2b\
+\:0e23\:0e37\:0e2d\:0e44\:0e21\:0e48 \:0e16\:0e49\:0e32\:0e44\:0e14\:0e49\
+\:0e08\:0e30\:0e21\:0e35\:0e04\:0e48\:0e32\:0e40\:0e1b\:0e47\:0e19 1 \:0e16\
+\:0e49\:0e32\:0e44\:0e21\:0e48\:0e44\:0e14\:0e49\:0e08\:0e30\:0e21\:0e35\:0e04\
+\:0e48\:0e32\:0e40\:0e1b\:0e47\:0e19 0\n\tAlgorithm \:0e19\:0e35\:0e49\:0e08\
+\:0e30\:0e27\:0e19\:0e23\:0e2d\:0e1a\:0e17\:0e31\:0e49\:0e07\:0e2b\:0e21\:0e14\
+ 3 loop \:0e0b\:0e49\:0e2d\:0e19\:0e01\:0e31\:0e19 \:0e42\:0e14\:0e22 loop k \
+\:0e2b\:0e23\:0e37\:0e2d loop \:0e19\:0e2d\:0e01\:0e2a\:0e38\:0e14 \:0e08\
+\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e01\:0e32\:0e23\:0e04\:0e49\:0e19\:0e2b\:0e32\
+\:0e27\:0e48\:0e32\:0e2b\:0e32\:0e01\:0e40\:0e23\:0e32\:0e40\:0e14\:0e34\:0e19\
+\:0e17\:0e32\:0e07 k \:0e01\:0e49\:0e32\:0e27\n\:0e2b\:0e23\:0e37\:0e2d\:0e40\
+\:0e14\:0e34\:0e19\:0e17\:0e32\:0e07\:0e02\:0e49\:0e32\:0e21 k node \:0e08\
+\:0e30\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e44\:0e1b\:0e17\:0e35\:0e48 node \
+\:0e44\:0e2b\:0e19\:0e44\:0e14\:0e49\:0e1a\:0e49\:0e32\:0e07 \:0e42\:0e14\
+\:0e22\:0e16\:0e49\:0e32\:0e2b\:0e32\:0e01\:0e40\:0e14\:0e34\:0e19\:0e02\:0e49\
+\:0e32\:0e21\:0e40\:0e1b\:0e47\:0e19\:0e08\:0e33\:0e19\:0e27\:0e19 n (n \
+\:0e04\:0e37\:0e2d \:0e02\:0e19\:0e32\:0e14\:0e02\:0e2d\:0e07 matrix) node \
+\:0e08\:0e30\:0e17\:0e33\:0e43\:0e2b\:0e49\:0e44\:0e14\:0e49\:0e40\:0e2a\:0e49\
+\:0e19\:0e17\:0e32\:0e07 \:0e01\:0e32\:0e23\:0e40\:0e14\:0e34\:0e19\:0e17\
+\:0e32\:0e07\:0e17\:0e31\:0e49\:0e07\:0e2b\:0e21\:0e14\:0e02\:0e2d\:0e07\:0e41\
+\:0e15\:0e48\:0e25\:0e30 node \
+\:0e27\:0e48\:0e32\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\
+\:0e17\:0e32\:0e07\:0e44\:0e1b\:0e44\:0e14\:0e49\:0e44\:0e01\:0e25\:0e2a\:0e38\
+\:0e14\:0e17\:0e35\:0e48 node \:0e44\:0e2b\:0e19\:0e1a\:0e49\:0e32\:0e07\n\t\
+\:0e42\:0e14\:0e22\:0e43\:0e19\:0e41\:0e15\:0e48\:0e25\:0e30\:0e23\:0e2d\:0e1a\
+ k \:0e08\:0e30\:0e17\:0e33\:0e01\:0e32\:0e23\:0e43\:0e2a\:0e48\:0e04\:0e48\
+\:0e32\:0e40\:0e2a\:0e49\:0e19\:0e17\:0e32\:0e07\:0e17\:0e35\:0e48\:0e2a\:0e32\
+\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\:0e17\:0e32\:0e07\:0e44\:0e1b\
+\:0e44\:0e14\:0e49\:0e02\:0e2d\:0e07\:0e41\:0e15\:0e48\:0e25\:0e30 node \
+\:0e08\:0e30\:0e27\:0e19\:0e23\:0e2d\:0e1a i \:0e41\:0e25\:0e30 j \
+\:0e40\:0e1e\:0e37\:0e48\:0e2d\:0e2a\:0e23\:0e49\:0e32\:0e07 Matrix \:0e43\
+\:0e2b\:0e21\:0e48\:0e17\:0e35\:0e48\:0e1a\:0e2d\:0e01\:0e27\:0e48\:0e32\n\
+\:0e21\:0e35\:0e40\:0e2a\:0e49\:0e19\:0e17\:0e32\:0e07\:0e17\:0e35\:0e48\:0e2a\
+\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\:0e17\:0e32\:0e07\:0e08\
+\:0e32\:0e01 node i \:0e44\:0e1b j \:0e19\:0e31\:0e49\:0e19\:0e46\:0e2b\:0e23\
+\:0e37\:0e2d\:0e40\:0e1b\:0e25\:0e48\:0e32 \:0e42\:0e14\:0e22\:0e14\:0e39\
+\:0e08\:0e32\:0e01 \:0e16\:0e49\:0e32\:0e21\:0e35\:0e40\:0e2a\:0e49\:0e19\
+\:0e17\:0e32\:0e07 \:0e08\:0e32\:0e01 i \:0e44\:0e1b j \:0e2d\:0e22\:0e39\
+\:0e48\:0e41\:0e25\:0e49\:0e27\:0e44\:0e21\:0e48\:0e15\:0e49\:0e2d\:0e07\:0e17\
+\:0e33\:0e2d\:0e30\:0e44\:0e23\:0e01\:0e47\:0e43\:0e2a\:0e48\:0e04\:0e48\:0e32\
+\:0e40\:0e14\:0e34\:0e21\:0e25\:0e07\:0e44\:0e1b \:0e41\:0e15\:0e48\:0e16\
+\:0e49\:0e32\:0e44\:0e21\:0e48\:0e21\:0e35\n\:0e43\:0e2b\:0e49\:0e1e\:0e34\
+\:0e08\:0e32\:0e23\:0e13\:0e32\:0e27\:0e48\:0e32 \:0e2a\:0e32\:0e21\:0e32\
+\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\:0e08\:0e32\:0e01 i \:0e44\:0e1b j \
+\:0e44\:0e14\:0e49\:0e42\:0e14\:0e22\:0e1c\:0e48\:0e32\:0e19 node k \:0e2b\
+\:0e23\:0e37\:0e2d\:0e40\:0e1b\:0e25\:0e48\:0e32 \:0e16\:0e49\:0e32\:0e21\
+\:0e35 \:0e01\:0e47\:0e43\:0e2a\:0e48 \:0e04\:0e48\:0e32 1 \:0e43\:0e19 \
+Matrix \:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07\:0e19\:0e31\:0e49\:0e19\
+\:0e46 \:0e16\:0e49\:0e32\:0e44\:0e21\:0e48\:0e21\:0e35 \:0e43\:0e2a\:0e48 0\n\
+\t\:0e40\:0e21\:0e37\:0e48\:0e2d\:0e27\:0e19\:0e23\:0e2d\:0e1a\:0e04\:0e23\
+\:0e1a k \:0e23\:0e2d\:0e1a \:0e08\:0e30\:0e44\:0e14\:0e49 Matrix \
+\:0e17\:0e35\:0e48\:0e1a\:0e2d\:0e01\:0e27\:0e48\:0e32\:0e41\:0e15\:0e48\:0e25\
+\:0e30 node \
+\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\:0e17\:0e32\:0e07\
+\:0e1c\:0e48\:0e32\:0e19 node \
+\:0e2d\:0e37\:0e48\:0e19\:0e46\:0e44\:0e1b\:0e17\:0e35\:0e48 node \
+\:0e44\:0e2b\:0e19\:0e44\:0e14\:0e49\:0e1a\:0e49\:0e32\:0e07\:0e17\:0e31\:0e49\
+\:0e07\:0e2b\:0e21\:0e14",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, {
+  3.7505493015478983`*^9, 3.7505493021689334`*^9}, {3.750549711331336*^9, 
+  3.750549730190415*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Evaluation", "Subsection",
+ CellChangeTimes->{{3.745061721730895*^9, 3.7450617238405895`*^9}}],
+
+Cell[TextData[{
+ StyleBox["\tWalshall\[CloseCurlyQuote]s Algorihm \:0e2a\:0e32\:0e21\:0e32\
+\:0e23\:0e16\:0e1a\:0e2d\:0e01\:0e44\:0e14\:0e49\:0e27\:0e48\:0e32 \:0e41\
+\:0e15\:0e48\:0e25\:0e30 node \
+\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e0a\:0e37\:0e48\:0e2d\:0e21\:0e15\
+\:0e48\:0e2d\:0e44\:0e1b\:0e22\:0e31\:0e07 node \
+\:0e44\:0e2b\:0e19\:0e44\:0e14\:0e49\:0e1a\:0e49\:0e32\:0e07\n\:0e2b\:0e23\
+\:0e37\:0e2d \:0e41\:0e15\:0e48\:0e25\:0e30 node \:0e2a\:0e32\:0e21\:0e32\
+\:0e23\:0e16\:0e40\:0e14\:0e34\:0e19\:0e17\:0e32\:0e07\:0e44\:0e14\:0e49\:0e44\
+\:0e01\:0e25\:0e2a\:0e38\:0e14\:0e44\:0e14\:0e49\:0e16\:0e36\:0e07 node \
+\:0e44\:0e2b\:0e19\:0e1a\:0e49\:0e32\:0e07 \:0e41\:0e15\:0e48\:0e44\:0e21\
+\:0e48\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e1a\:0e2d\:0e01\:0e44\:0e14\:0e49\
+\:0e27\:0e48\:0e32 \:0e40\:0e2a\:0e49\:0e19\:0e17\:0e32\:0e07\:0e44\:0e2b\
+\:0e19\:0e17\:0e35\:0e48\:0e43\:0e01\:0e25\:0e49\:0e17\:0e35\:0e48\:0e2a\:0e38\
+\:0e14 \:0e17\:0e35\:0e48\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e14\
+\:0e34\:0e19\:0e17\:0e32\:0e07\n\:0e08\:0e32\:0e01 node \:0e2b\:0e19\:0e36\
+\:0e48\:0e07\:0e44\:0e1b\:0e2d\:0e35\:0e01 node \
+\:0e2b\:0e19\:0e36\:0e48\:0e07\:0e44\:0e14\:0e49 \:0e40\:0e1e\:0e23\:0e32\
+\:0e30 Walshall\[CloseCurlyQuote]s Algorithm \:0e43\:0e0a\:0e49\:0e41\:0e04\
+\:0e48\:0e40\:0e1e\:0e35\:0e22\:0e07\:0e04\:0e48\:0e32 1 \:0e41\:0e25\:0e30 0 \
+\:0e17\:0e35\:0e48\:0e1a\:0e2d\:0e01\:0e27\:0e48\:0e32\n\:0e2a\:0e32\:0e21\
+\:0e32\:0e23\:0e16\:0e44\:0e1b\:0e44\:0e14\:0e49 \:0e01\:0e31\:0e1a \:0e44\
+\:0e21\:0e48\:0e44\:0e14\:0e49 \:0e21\:0e32\:0e04\:0e33\:0e19\:0e27\:0e13\
+\:0e40\:0e1e\:0e35\:0e22\:0e07\:0e41\:0e04\:0e48\:0e19\:0e31\:0e49\:0e19 \
+\:0e44\:0e21\:0e48\:0e44\:0e14\:0e49\:0e43\:0e0a\:0e49\:0e23\:0e30\:0e22\:0e30\
+\:0e17\:0e32\:0e07\:0e23\:0e30\:0e2b\:0e27\:0e48\:0e32\:0e07 node \
+\:0e21\:0e32\:0e04\:0e33\:0e19\:0e27\:0e13\n\t",
+  FontSize->16],
+ StyleBox["Time efficiency : ",
+  FontSize->16,
+  FontWeight->"Bold"],
+ StyleBox["O(n^3)\n\t",
+  FontSize->16],
+ StyleBox["Space efficiency: ",
+  FontSize->16,
+  FontWeight->"Bold"],
+ StyleBox["\:0e08\:0e32\:0e01 code \:0e17\:0e35\:0e48\:0e40\:0e23\:0e32 \
+implement \:0e21\:0e32 \:0e08\:0e30\:0e43\:0e0a\:0e49 space \
+\:0e40\:0e1b\:0e47\:0e19 ",
+  FontSize->16],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"O", "(", 
+    SuperscriptBox["n", "3"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ StyleBox["    \:0e40\:0e19\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01\:0e40\
+\:0e23\:0e32\:0e40\:0e02\:0e35\:0e22\:0e19 matrix \:0e40\:0e1e\:0e34\:0e48\
+\:0e21\:0e40\:0e23\:0e37\:0e48\:0e2d\:0e22\:0e46 \:0e15\:0e32\:0e21\:0e08\
+\:0e33\:0e19\:0e27\:0e19 k\n\:0e41\:0e15\:0e48\:0e40\:0e23\:0e32\:0e2a\:0e32\
+\:0e21\:0e32\:0e23\:0e16\:0e25\:0e14\:0e08\:0e33\:0e19\:0e27\:0e19 space \
+\:0e17\:0e35\:0e48\:0e43\:0e0a\:0e49\:0e44\:0e14\:0e49 \:0e40\:0e1b\:0e47\
+\:0e19 ",
+  FontSize->16],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"O", "(", 
+    SuperscriptBox["n", "2"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "  ",
+ StyleBox[" \:0e44\:0e14\:0e49 \:0e42\:0e14\:0e22\:0e01\:0e32\:0e23\:0e40\
+\:0e02\:0e35\:0e22\:0e19 matrix \:0e17\:0e31\:0e1a\:0e02\:0e2d\:0e07\:0e40\
+\:0e14\:0e34\:0e21 ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.745061740137463*^9, 3.745061742152867*^9}, 
+   3.750550264964002*^9, 3.7505505817371206`*^9, {3.7505506130589123`*^9, 
+   3.7505506166021147`*^9}, {3.7505506888502474`*^9, 3.750550698878821*^9}, {
+   3.7505507348388777`*^9, 3.7505507929572015`*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Floyd\[CloseCurlyQuote]s Algorithm", "Section",
+ CellChangeTimes->{{3.7499026240634675`*^9, 3.749902632045968*^9}, {
+  3.7499031814978623`*^9, 3.7499031844671173`*^9}}],
+
+Cell[TextData[{
+ "Implement the Floyd\[CloseCurlyQuote]s algorithm that solve the all-pairs \
+shortest-path problem for the digraph with the following weight matrix:\n",
+ Cell[BoxData[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "2", "\[Infinity]", "1", "8"},
+     {"6", "0", "3", "2", "\[Infinity]"},
+     {"\[Infinity]", "\[Infinity]", "0", "4", "\[Infinity]"},
+     {"\[Infinity]", "\[Infinity]", "2", "0", "3"},
+     {"3", "\[Infinity]", "\[Infinity]", "\[Infinity]", "0"}
+    }], "\[NoBreak]", ")"}]]]
+}], "Text",
+ CellChangeTimes->{{3.749902638700859*^9, 3.749902698172433*^9}, {
+  3.749903192332019*^9, 3.7499031933327737`*^9}, {3.7499032579410295`*^9, 
+  3.749903305337267*^9}, {3.7499033555604715`*^9, 3.7499033948476887`*^9}, {
+  3.7499034317699547`*^9, 3.7499034728776608`*^9}}],
+
+Cell["The sample of Floyd\[CloseCurlyQuote]s algorithm is shown below", "Text",
+ CellChangeTimes->{{3.7499029719616013`*^9, 3.749902990392192*^9}, {
+  3.749903479731491*^9, 3.7499034819193726`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`data$$ = {{0, 
+      DirectedInfinity[1], 3, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {2, 0, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 7, 0, 1, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {6, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 0, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}}, $CellContext`n$$ = 4, $CellContext`step$$ = 4, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`data$$], {{
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}, {
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1], 
+         DirectedInfinity[1]}}}}, {{
+       Hold[$CellContext`n$$], 4}, 3, 10, 1}, {{
+       Hold[$CellContext`step$$], 0}, 0, 
+      Dynamic[$CellContext`n$$], 1}, {
+      Hold[
+       Dynamic[
+        Panel[
+         Grid[
+          Outer[InputField[
+            Dynamic[
+             Part[$CellContext`data$$, #, #2]], FieldSize -> 2]& , 
+           Range[$CellContext`n$$], 
+           Range[$CellContext`n$$]]]]]], Manipulate`Dump`ThisIsNotAControl}}, 
+    Typeset`size$$ = {180., {89.5, 96.5}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`n$1533$$ = 0, $CellContext`step$1534$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`data$$ = {{
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}, {
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1], 
+           DirectedInfinity[1]}}, $CellContext`n$$ = 4, $CellContext`step$$ = 
+        0}, "ControllerVariables" :> {
+        Hold[$CellContext`n$$, $CellContext`n$1533$$, 0], 
+        Hold[$CellContext`step$$, $CellContext`step$1534$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Column[{
+         WeightedAdjacencyGraph[
+          Take[$CellContext`data$$, $CellContext`n$$, $CellContext`n$$], 
+          VertexLabels -> "Name"], 
+         Row[{"Step ", $CellContext`step$$, "    ", 
+           MatrixForm[
+            Part[
+             $CellContext`Floyd[
+              
+              Take[$CellContext`data$$, $CellContext`n$$, $CellContext`n$$]], \
+$CellContext`step$$ + 1]]}]}], "Specifications" :> {{{$CellContext`data$$, {{
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}, {
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1], 
+            DirectedInfinity[1]}}}, ControlType -> 
+         None}, {{$CellContext`n$$, 4}, 3, 10, 1}, {{$CellContext`step$$, 0}, 
+         0, 
+         Dynamic[$CellContext`n$$], 1}, 
+        Dynamic[
+         Panel[
+          Grid[
+           Outer[InputField[
+             Dynamic[
+              Part[$CellContext`data$$, #, #2]], FieldSize -> 2]& , 
+            Range[$CellContext`n$$], 
+            Range[$CellContext`n$$]]]]]}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{273., {210., 217.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>(($CellContext`Floyd[
+         Pattern[$CellContext`W, 
+          Blank[]]] := 
+       Module[{D, $CellContext`n, $CellContext`i, $CellContext`j, \
+$CellContext`k}, $CellContext`n = Length[
+            Part[$CellContext`W, 1]]; D = Table[
+            Table[
+            0, {$CellContext`n}, {$CellContext`n}], {$CellContext`n + 1}]; 
+         Part[D, 1] = $CellContext`W; 
+         For[$CellContext`k = 1, $CellContext`k <= $CellContext`n, 
+           Increment[$CellContext`k], 
+           For[$CellContext`i = 1, $CellContext`i <= $CellContext`n, 
+             Increment[$CellContext`i], 
+             For[$CellContext`j = 1, $CellContext`j <= $CellContext`n, 
+               Increment[$CellContext`j], 
+               Part[D, $CellContext`k + 1, $CellContext`i, $CellContext`j] = 
+                Min[
+                  Part[D, $CellContext`k, $CellContext`i, $CellContext`j], 
+                  Part[D, $CellContext`k, $CellContext`i, $CellContext`k] + 
+                  Part[D, $CellContext`k, $CellContext`k, $CellContext`j]]; 
+               Null]; Null]; Null]; Return[D]; Null]; Null); 
+     Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.7498739254846563`*^9, 3.749874020967702*^9, {3.7498740787822237`*^9, 
+   3.7498740961375246`*^9}, 3.7498741461379695`*^9, {3.7498745334561377`*^9, 
+   3.7498745434849987`*^9}, {3.749874600065468*^9, 3.749874637509808*^9}, 
+   3.7498746918124957`*^9, 3.749874878833728*^9, 3.749877602735941*^9, 
+   3.7498793555997953`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}, {
+  3.7492702793342996`*^9, 3.749270280162221*^9}, {3.749903046594708*^9, 
+  3.7499030504066944`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"FloydAlgorithm", "[", "A_", "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"k", ",", "i", ",", "j", ",", "n", ",", "R", ",", "temp"}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"R", "=", 
+       RowBox[{"{", "A", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"n", "=", 
+       RowBox[{"Length", "[", "A", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"k", "=", "1"}], ",", 
+        RowBox[{"k", "\[LessEqual]", "n"}], ",", 
+        RowBox[{"k", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"R", ",", 
+           RowBox[{
+           "R", "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}]}], 
+          "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"i", "=", "1"}], ",", 
+           RowBox[{"i", "\[LessEqual]", "n"}], ",", 
+           RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"For", "[", 
+             RowBox[{
+              RowBox[{"j", "=", "1"}], ",", 
+              RowBox[{"j", "\[LessEqual]", "n"}], ",", 
+              RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+              RowBox[{"{", "\[IndentingNewLine]", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"R", "\[LeftDoubleBracket]", 
+                    RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}], 
+                   "+", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"R", "\[LeftDoubleBracket]", 
+                    RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}]}], 
+                  "<", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"R", "\[LeftDoubleBracket]", 
+                    RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+                   "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}]}], 
+                 ",", "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"R", "\[LeftDoubleBracket]", 
+                    RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
+                   "=", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"R", "\[LeftDoubleBracket]", 
+                    RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}], 
+                    "+", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"R", "\[LeftDoubleBracket]", 
+                    RowBox[{"k", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "k", "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "j", 
+                    "\[RightDoubleBracket]"}]}]}], ";"}]}], 
+                "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", "}"}]}], 
+             "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+          "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", 
+       RowBox[{"R", "\[LeftDoubleBracket]", 
+        RowBox[{"n", "+", "1"}], "\[RightDoubleBracket]"}], "]"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gra", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "\[Infinity]", ",", "3", ",", "\[Infinity]"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "0", ",", "\[Infinity]", ",", "\[Infinity]"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Infinity]", ",", "7", ",", "0", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"6", ",", "\[Infinity]", ",", "\[Infinity]", ",", "0"}], 
+      "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Matrix Problem \[LongRightArrow] \>\"", ",", 
+    RowBox[{"MatrixForm", "[", "gra", "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{
+   "\"\<Floyd's Transitive Closure\>\"", ",", "\"\< \[LongRightArrow] \>\"", 
+    ",", 
+    RowBox[{"MatrixForm", "[", 
+     RowBox[{"FloydAlgorithm", "[", "gra", "]"}], "]"}]}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.750543872783946*^9, 3.7505439078528075`*^9}, {
+  3.7505439642781067`*^9, 3.7505440756935024`*^9}, {3.750544133039203*^9, 
+  3.7505441974517164`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Matrix Problem \[LongRightArrow] \"\>", "\[InvisibleSpace]", 
+   TagBox[
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0", "\[Infinity]", "3", "\[Infinity]"},
+       {"2", "0", "\[Infinity]", "\[Infinity]"},
+       {"\[Infinity]", "7", "0", "1"},
+       {"6", "\[Infinity]", "\[Infinity]", "0"}
+      },
+      GridBoxAlignment->{
+       "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+        "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]]}],
+  SequenceForm["Matrix Problem \[LongRightArrow] ", 
+   MatrixForm[{{0, 
+      DirectedInfinity[1], 3, 
+      DirectedInfinity[1]}, {2, 0, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1]}, {
+      DirectedInfinity[1], 7, 0, 1}, {6, 
+      DirectedInfinity[1], 
+      DirectedInfinity[1], 0}}]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.750544747629689*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Floyd's Transitive Closure\"\>", 
+   "\[InvisibleSpace]", "\<\" \[LongRightArrow] \"\>", "\[InvisibleSpace]", 
+   TagBox[
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0", "10", "3", "4"},
+       {"2", "0", "5", "6"},
+       {"7", "7", "0", "1"},
+       {"6", "16", "9", "0"}
+      },
+      GridBoxAlignment->{
+       "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+        "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.7]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]]}],
+  SequenceForm["Floyd's Transitive Closure", " \[LongRightArrow] ", 
+   MatrixForm[{{0, 10, 3, 4}, {2, 0, 5, 6}, {7, 7, 0, 1}, {6, 16, 9, 0}}]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.7505447476356897`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell["Explain here.", "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Evaluation", "Subsection",
+ CellChangeTimes->{{3.745061721730895*^9, 3.7450617238405895`*^9}}],
+
+Cell["Explain here.", "Text",
+ CellChangeTimes->{{3.745061740137463*^9, 3.745061742152867*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1093, 676},
+WindowMargins->{{Automatic, -7}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (September 9, 2014)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "WindowsThai"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 163, 2, 99, "Title"],
+Cell[746, 26, 117, 1, 36, "Subtitle"],
+Cell[CellGroupData[{
+Cell[888, 31, 124, 1, 72, "Section"],
+Cell[1015, 34, 236, 4, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1276, 42, 257, 7, 26, "ItemNumbered"],
+Cell[1536, 51, 561, 16, 26, "ItemNumbered"],
+Cell[2100, 69, 266, 5, 26, "ItemNumbered"]
+}, Open  ]],
+Cell[2381, 77, 152, 2, 30, "Text"],
+Cell[2536, 81, 5669, 115, 521, "Input"],
+Cell[CellGroupData[{
+Cell[8230, 200, 206, 3, 37, "Subsection"],
+Cell[8439, 205, 3458, 78, 301, "Input"],
+Cell[CellGroupData[{
+Cell[11922, 287, 1747, 46, 227, "Input"],
+Cell[13672, 335, 1031, 26, 66, "Output"],
+Cell[14706, 363, 989, 25, 66, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15744, 394, 102, 1, 37, "Subsection"],
+Cell[15849, 397, 5474, 75, 221, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21360, 477, 100, 1, 37, "Subsection"],
+Cell[21463, 480, 3495, 67, 165, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25007, 553, 174, 2, 72, "Section"],
+Cell[25184, 557, 795, 15, 116, "Text"],
+Cell[25982, 574, 198, 2, 30, "Text"],
+Cell[26183, 578, 16853, 484, 453, "Output"],
+Cell[CellGroupData[{
+Cell[43061, 1066, 206, 3, 37, "Subsection"],
+Cell[CellGroupData[{
+Cell[43292, 1073, 5432, 124, 441, "Input"],
+Cell[48727, 1199, 1230, 32, 95, "Output"],
+Cell[49960, 1233, 1056, 26, 95, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51065, 1265, 102, 1, 37, "Subsection"],
+Cell[51170, 1268, 97, 1, 30, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51304, 1274, 100, 1, 37, "Subsection"],
+Cell[51407, 1277, 95, 1, 30, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

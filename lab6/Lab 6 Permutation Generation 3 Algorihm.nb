@@ -1,0 +1,1354 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     54412,       1345]
+NotebookOptionsPosition[     49690,       1217]
+NotebookOutlinePosition[     50111,       1233]
+CellTagsIndexPosition[     50068,       1230]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["CPE 212 Algorithm Design (1/61)",
+ FontWeight->"Bold"]], "Title",
+ CellChangeTimes->{{3.7486902235714684`*^9, 3.7486902331938086`*^9}}],
+
+Cell["Lab VI: Permutation Generation", "Subtitle",
+ CellChangeTimes->{{3.7486902365049453`*^9, 3.7486902509869003`*^9}}],
+
+Cell["", "Text"],
+
+Cell[TextData[StyleBox["Bottom-Up permutation Algorihm",
+ FontSize->24]], "Text",
+ CellChangeTimes->{{3.7492690920399027`*^9, 3.7492691063817234`*^9}, {
+  3.74926913675146*^9, 3.7492691394496145`*^9}, {3.749269245196663*^9, 
+  3.749269248546855*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Design Algorithm", "Section",
+ CellChangeTimes->{{3.748690289895612*^9, 3.7486903237951975`*^9}}],
+
+Cell[TextData[{
+ "Express the decrease-(by-one)-and-conquer (bottom-up) algorithm to generate \
+all permutation of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "3", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "Text",
+ CellChangeTimes->{{3.7486903308409886`*^9, 3.748690371282404*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Algorithm 1",
+  FontWeight->"Bold"],
+ " BottomUpPermu"
+}], "Text",
+ CellFrame->{{0, 0}, {0.5, 0.5}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550620172615*^9, 3.7455506261868258`*^9}, 
+   3.74555125568647*^9, {3.7486913038508167`*^9, 3.7486913105563354`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Input",
+  FontWeight->"Bold"],
+ ":\tA set of elements ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "...", ",", "n"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455506974200797`*^9}, 
+   3.74555125568647*^9, {3.7455524252798157`*^9, 3.7455524257958975`*^9}, {
+   3.74555247742437*^9, 3.7455524782366867`*^9}, {3.7486904483068886`*^9, 
+   3.7486904575859594`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Output",
+  FontWeight->"Bold"],
+ ": All permutations of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "...", ",", "n"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507897609525`*^9}, 
+   3.74555125568647*^9, 3.745552387289302*^9, {3.745552417344702*^9, 
+   3.745552419219309*^9}, 3.7455526470849285`*^9, {3.748690467666794*^9, 
+   3.748690478258057*^9}}],
+
+Cell["", "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507914006433`*^9}, 
+   3.74555125568647*^9}],
+
+Cell["", "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9}],
+
+Cell["", "Text",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.7455513792846923`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell["Explain here.", "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, 
+   3.7492674438576326`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Section",
+ CellChangeTimes->{{3.7486905118391304`*^9, 3.7486905147292566`*^9}}],
+
+Cell[TextData[{
+ "Implement the decrease-(by-one)-and-conquer algorithm to generate all \
+permutations of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "3", ",", "...", ",", "n"}], TraditionalForm]]],
+ ", where ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " is the input value from the user. The program should successively print \
+out all permutations, starting from those with one element, two elements, and \
+finally ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " elements.\nAn example run of the program is shown below:\n",
+ Cell[BoxData[
+  TagBox[
+   StyleBox[
+    DynamicModuleBox[{$CellContext`n$$ = 0, Typeset`show$$ = True, 
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+     "\"untitled\"", Typeset`specs$$ = {{
+       Hold[$CellContext`n$$], 2}}, Typeset`size$$ = {8., {1.5, 8.5}}, 
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+     False}, 
+     DynamicBox[Manipulate`ManipulateBoxes[
+      1, StandardForm, "Variables" :> {$CellContext`n$$ = 2}, 
+       "ControllerVariables" :> {}, 
+       "OtherVariables" :> {
+        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+         Typeset`specs$$, Typeset`size$$, Typeset`update$$, 
+         Typeset`initDone$$, Typeset`skipInitDone$$}, 
+       "Body" :> $CellContext`BottomUpPermu[$CellContext`n$$], 
+       "Specifications" :> {{$CellContext`n$$, 2}}, "Options" :> {}, 
+       "DefaultOptions" :> {}],
+      ImageSizeCache->{258., {48., 55.}},
+      SingleEvaluation->True],
+     Deinitialization:>None,
+     DynamicModuleValues:>{},
+     Initialization:>($CellContext`BottomUpPermu[
+         Pattern[$CellContext`n, 
+          Blank[Integer]]] := 
+       Module[{$CellContext`i, $CellContext`j, $CellContext`k, \
+$CellContext`permu = {{1}}, $CellContext`temp = {}}, 
+         For[$CellContext`i = 2, $CellContext`i <= $CellContext`n, 
+           Increment[$CellContext`i], 
+           For[$CellContext`k = 1, $CellContext`k <= 
+             Length[$CellContext`permu], 
+             Increment[$CellContext`k], 
+             For[$CellContext`j = $CellContext`i, $CellContext`j >= 1, 
+               
+               Decrement[$CellContext`j], $CellContext`temp = 
+                Join[$CellContext`temp, {
+                   Insert[
+                    
+                    Part[$CellContext`permu, $CellContext`k], $CellContext`i, \
+$CellContext`j]}]; Null]; 
+             Null]; $CellContext`permu = $CellContext`temp; $CellContext`temp = \
+{}; Null]; Grid[$CellContext`permu]]; Typeset`initDone$$ = True),
+     SynchronousInitialization->True,
+     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+     UnsavedVariables:>{Typeset`initDone$$},
+     UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+    Deployed->True,
+    StripOnInput->False],
+   Manipulate`InterpretManipulate[1]]], "Output",
+  CellChangeTimes->{{3.7486947527163143`*^9, 3.7486947619172697`*^9}}]
+}], "Text",
+ CellChangeTimes->{{3.748690528211314*^9, 3.7486906241581078`*^9}, {
+  3.748690655017846*^9, 3.7486906633758383`*^9}, {3.748694791189152*^9, 
+  3.7486948097535157`*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{
+  3.7492049032176123`*^9, {3.7492049767448177`*^9, 3.7492049796049814`*^9}, {
+   3.749205044886715*^9, 3.7492050510260663`*^9}, {3.749205141423237*^9, 
+   3.7492052200557346`*^9}, {3.749205291507821*^9, 3.7492052973541555`*^9}, {
+   3.749205353621374*^9, 3.749205500113753*^9}, {3.7492055914039745`*^9, 
+   3.7492055978413424`*^9}, {3.749267652788583*^9, 3.7492676732297516`*^9}, {
+   3.7492690312984285`*^9, 3.749269033904578*^9}}],
+
+Cell["", "Text"],
+
+Cell[TextData[StyleBox["Johnson Trotter Permutation Algorithm",
+ FontSize->24]], "Text",
+ CellChangeTimes->{{3.749269144979931*^9, 3.749269165369097*^9}, {
+  3.7492692378262415`*^9, 3.749269240757409*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Design Algorithm", "Section",
+ CellChangeTimes->{{3.748690289895612*^9, 3.7486903237951975`*^9}}],
+
+Cell[TextData[{
+ "Express the decrease-(by-one)-and-conquer (Jonhson Trotter) algorithm to \
+generate all permutation of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "3", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "Text",
+ CellChangeTimes->{{3.7486903308409886`*^9, 3.748690371282404*^9}, {
+  3.7492677542913885`*^9, 3.7492677580686045`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Algorithm 1",
+  FontWeight->"Bold"],
+ " Johnson Trotter"
+}], "Text",
+ CellFrame->{{0, 0}, {0.5, 0.5}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550620172615*^9, 3.7455506261868258`*^9}, 
+   3.74555125568647*^9, {3.7486913038508167`*^9, 3.7486913105563354`*^9}, {
+   3.7492675237932043`*^9, 3.7492675289224977`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Input",
+  FontWeight->"Bold"],
+ ":\tA set of elements ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455506974200797`*^9}, 
+   3.74555125568647*^9, {3.7455524252798157`*^9, 3.7455524257958975`*^9}, {
+   3.74555247742437*^9, 3.7455524782366867`*^9}, {3.7486904483068886`*^9, 
+   3.7486904575859594`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Output",
+  FontWeight->"Bold"],
+ ": All permutations of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507897609525`*^9}, 
+   3.74555125568647*^9, 3.745552387289302*^9, {3.745552417344702*^9, 
+   3.745552419219309*^9}, 3.7455526470849285`*^9, {3.748690467666794*^9, 
+   3.748690478258057*^9}}],
+
+Cell["", "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507914006433`*^9}, 
+   3.74555125568647*^9, {3.7492679595851307`*^9, 3.7492679657284813`*^9}}],
+
+Cell[TextData[{
+ StyleBox["for",
+  FontWeight->"Bold"],
+ " i \[LeftArrow] 0 to n! ",
+ StyleBox["do",
+  FontWeight->"Bold"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492679754840393`*^9, 3.749268114633999*^9}}],
+
+Cell["k \[LeftArrow] largest mobile element", "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492679754840393`*^9, 3.749268114631998*^9}, {
+   3.749268148872957*^9, 3.749268173188348*^9}}],
+
+Cell[TextData[{
+ StyleBox["swap ",
+  FontWeight->"Bold"],
+ "(",
+ StyleBox[" ",
+  FontWeight->"Bold"],
+ "A[k] , the adjacent A[k] arrow points to )"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492679754840393`*^9, 3.749268114631998*^9}, {
+   3.749268148872957*^9, 3.7492682503507614`*^9}, {3.7492682903560495`*^9, 
+   3.749268341228959*^9}}],
+
+Cell[TextData[{
+ StyleBox["reverse ",
+  FontWeight->"Bold"],
+ "direction of all the elements that are larger than A[k]"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492679754840393`*^9, 3.7492680404997587`*^9}, {
+   3.7492683536066675`*^9, 3.749268390310766*^9}, {3.749268424498722*^9, 
+   3.749268424500722*^9}}],
+
+Cell[TextData[{
+ StyleBox["add",
+  FontWeight->"Bold"],
+ " new permutation to the answer\[CloseCurlyQuote]s list"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492679754840393`*^9, 3.7492680404997587`*^9}, {
+   3.7492683536066675`*^9, 3.749268390310766*^9}, {3.749268424498722*^9, 
+   3.7492684454659214`*^9}, {3.7492699766134977`*^9, 3.7492699797946796`*^9}}],
+
+Cell["", "Text",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.7455513792846923`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell[TextData[StyleBox["\t\:0e43\:0e19\:0e01\:0e32\:0e23\:0e2b\:0e32 \
+permutation \:0e42\:0e14\:0e22\:0e27\:0e34\:0e18\:0e35 Johnson Trotter \:0e08\
+\:0e30\:0e01\:0e33\:0e2b\:0e19\:0e14\:0e43\:0e2b\:0e49 element \:0e17\:0e38\
+\:0e01\:0e15\:0e31\:0e27\:0e21\:0e35\:0e17\:0e34\:0e28\:0e17\:0e32\:0e07 \
+\:0e42\:0e14\:0e22\:0e40\:0e23\:0e34\:0e48\:0e21\:0e41\:0e23\:0e01\:0e08\:0e30\
+\:0e21\:0e35\:0e17\:0e34\:0e28\:0e17\:0e32\:0e07\:0e44\:0e1b\:0e17\:0e32\:0e07\
+\:0e0b\:0e49\:0e32\:0e22\n\:0e42\:0e14\:0e22\:0e08\:0e33\:0e19\:0e27\:0e19 \
+permutation \
+\:0e17\:0e31\:0e49\:0e07\:0e2b\:0e21\:0e14\:0e08\:0e30\:0e21\:0e35 n! \:0e42\
+\:0e14\:0e22\:0e17\:0e35\:0e48 n \:0e04\:0e37\:0e2d\:0e08\:0e33\:0e19\:0e27\
+\:0e19 element \:0e43\:0e19 list \:0e17\:0e33\:0e43\:0e2b\:0e49\:0e15\:0e49\
+\:0e2d\:0e07\:0e27\:0e19\:0e23\:0e2d\:0e1a\:0e2b\:0e32\:0e40\:0e1b\:0e47\:0e19\
+\:0e08\:0e33\:0e19\:0e27\:0e19 n! \:0e23\:0e2d\:0e1a\n\t\:0e0b\:0e36\:0e48\
+\:0e07\:0e43\:0e19\:0e41\:0e15\:0e48\:0e25\:0e30\:0e23\:0e2d\:0e1a\:0e01\:0e32\
+\:0e23\:0e17\:0e33\:0e07\:0e32\:0e19 Algorithm \:0e19\:0e35\:0e49\:0e08\:0e30\
+\:0e2b\:0e32 element \:0e17\:0e35\:0e48\:0e21\:0e35\:0e04\:0e48\:0e32\:0e21\
+\:0e32\:0e01\:0e17\:0e35\:0e48\:0e2a\:0e38\:0e14\:0e17\:0e35\:0e48\:0e2a\:0e32\
+\:0e21\:0e32\:0e23\:0e16\:0e40\:0e04\:0e25\:0e37\:0e48\:0e2d\:0e19\:0e17\:0e35\
+\:0e48\:0e44\:0e14\:0e49 (\:0e08\:0e30\:0e40\:0e04\:0e25\:0e37\:0e48\:0e2d\
+\:0e19\:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e01\:0e47\:0e15\:0e48\:0e2d\:0e40\
+\:0e21\:0e37\:0e48\:0e2d\:0e17\:0e34\:0e28\:0e17\:0e32\:0e07\:0e02\:0e2d\:0e07\
+\:0e25\:0e39\:0e01\:0e28\:0e23\:0e44\:0e21\:0e48\:0e0a\:0e19\:0e01\:0e33\:0e41\
+\:0e1e\:0e07 \n\:0e2b\:0e23\:0e37\:0e2d\:0e01\:0e25\:0e48\:0e32\:0e27\:0e04\
+\:0e37\:0e2d \:0e16\:0e49\:0e32\:0e25\:0e39\:0e01\:0e28\:0e23\:0e0a\:0e35\
+\:0e49\:0e44\:0e1b\:0e17\:0e32\:0e07\:0e0b\:0e49\:0e32\:0e22 \:0e08\:0e30\
+\:0e15\:0e49\:0e2d\:0e07\:0e44\:0e21\:0e48\:0e43\:0e0a\:0e48 element \:0e41\
+\:0e23\:0e01 \:0e2b\:0e23\:0e37\:0e2d \:0e16\:0e49\:0e32\:0e25\:0e39\:0e01\
+\:0e28\:0e23\:0e0a\:0e35\:0e49\:0e44\:0e1b\:0e17\:0e32\:0e07\:0e02\:0e27\:0e32\
+ \:0e08\:0e30\:0e44\:0e21\:0e48\:0e43\:0e0a\:0e48 element \:0e2a\:0e38\:0e14\
+\:0e17\:0e49\:0e32\:0e22) \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e44\:0e14\:0e49\
+\:0e21\:0e32\:0e41\:0e25\:0e49\:0e27 \:0e40\:0e23\:0e32\:0e08\:0e30\:0e40\
+\:0e23\:0e35\:0e22\:0e01\:0e21\:0e31\:0e19\:0e27\:0e48\:0e32 mobile\n\:0e2b\
+\:0e25\:0e31\:0e07\:0e08\:0e32\:0e01\:0e19\:0e31\:0e49\:0e19\:0e40\:0e23\:0e32\
+\:0e08\:0e30\:0e2a\:0e25\:0e31\:0e1a mobile \:0e01\:0e31\:0e1a element \:0e02\
+\:0e49\:0e32\:0e07\:0e46\:0e17\:0e35\:0e48\:0e25\:0e39\:0e01\:0e28\:0e23\:0e0a\
+\:0e35\:0e49 \:0e43\:0e19\:0e02\:0e13\:0e30\:0e40\:0e14\:0e35\:0e22\:0e27\
+\:0e01\:0e31\:0e19 \:0e2b\:0e32\:0e01\:0e21\:0e35 element \:0e17\:0e35\:0e48\
+\:0e21\:0e35\:0e04\:0e48\:0e32\:0e21\:0e32\:0e01\:0e01\:0e27\:0e48\:0e32 \
+\:0e04\:0e48\:0e32\:0e02\:0e2d\:0e07 mobile \:0e41\:0e15\:0e48\:0e44\:0e21\
+\:0e48\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e40\:0e04\:0e25\:0e37\:0e48\:0e2d\
+\:0e19\:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\n\:0e08\:0e30\:0e17\:0e33\:0e01\
+\:0e32\:0e23\:0e01\:0e25\:0e31\:0e1a\:0e2b\:0e31\:0e27\:0e25\:0e39\:0e01\:0e28\
+\:0e23\:0e40\:0e1e\:0e37\:0e48\:0e2d\:0e43\:0e2b\:0e49 element \:0e15\:0e31\
+\:0e27\:0e17\:0e35\:0e48\:0e21\:0e32\:0e01\:0e01\:0e27\:0e48\:0e32\:0e2a\:0e32\
+\:0e21\:0e32\:0e23\:0e16\:0e40\:0e04\:0e25\:0e37\:0e48\:0e2d\:0e19\:0e17\:0e35\
+\:0e48\:0e44\:0e14\:0e49\n\t\:0e40\:0e21\:0e37\:0e48\:0e2d\:0e40\:0e2a\:0e23\
+\:0e47\:0e08\:0e41\:0e25\:0e49\:0e27\:0e40\:0e23\:0e32\:0e08\:0e30\:0e44\:0e14\
+\:0e49 list \:0e17\:0e35\:0e48\:0e40\:0e1b\:0e47\:0e19 1 \:0e43\:0e19\:0e01\
+\:0e32\:0e23 permutation \:0e21\:0e32 \:0e41\:0e25\:0e49\:0e27\:0e27\:0e19\
+\:0e23\:0e2d\:0e1a\:0e17\:0e33\:0e07\:0e32\:0e19\:0e15\:0e48\:0e2d\:0e44\:0e1b\
+\:0e08\:0e19\:0e01\:0e27\:0e48\:0e32\:0e08\:0e30\:0e2b\:0e32\:0e04\:0e23\:0e1a\
+",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, 
+   3.7492674438576326`*^9, {3.749268458466665*^9, 3.749268470809371*^9}, 
+   3.749268977137331*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Section",
+ CellChangeTimes->{{3.7486905118391304`*^9, 3.7486905147292566`*^9}}],
+
+Cell[TextData[{
+ "Implement the decrease-(by-one)-and-conquer algorithm to generate all \
+permutations of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "3", ",", "...", ",", "n"}], TraditionalForm]]],
+ ", where ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " is the input value from the user. The program should successively print \
+out all permutations, starting from those with one element, two elements, and \
+finally ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " elements.\nAn example run of the program is shown below:\n",
+ Cell[BoxData[
+  TagBox[
+   StyleBox[
+    DynamicModuleBox[{$CellContext`n$$ = 0, Typeset`show$$ = True, 
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+     "\"untitled\"", Typeset`specs$$ = {{
+       Hold[$CellContext`n$$], 2}}, Typeset`size$$ = {8., {1.5, 8.5}}, 
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+     False}, 
+     DynamicBox[Manipulate`ManipulateBoxes[
+      1, StandardForm, "Variables" :> {$CellContext`n$$ = 2}, 
+       "ControllerVariables" :> {}, 
+       "OtherVariables" :> {
+        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+         Typeset`specs$$, Typeset`size$$, Typeset`update$$, 
+         Typeset`initDone$$, Typeset`skipInitDone$$}, 
+       "Body" :> $CellContext`BottomUpPermu[$CellContext`n$$], 
+       "Specifications" :> {{$CellContext`n$$, 2}}, "Options" :> {}, 
+       "DefaultOptions" :> {}],
+      ImageSizeCache->{258., {48., 55.}},
+      SingleEvaluation->True],
+     Deinitialization:>None,
+     DynamicModuleValues:>{},
+     Initialization:>($CellContext`BottomUpPermu[
+         Pattern[$CellContext`n, 
+          Blank[Integer]]] := 
+       Module[{$CellContext`i, $CellContext`j, $CellContext`k, \
+$CellContext`permu = {{1}}, $CellContext`temp = {}}, 
+         For[$CellContext`i = 2, $CellContext`i <= $CellContext`n, 
+           Increment[$CellContext`i], 
+           For[$CellContext`k = 1, $CellContext`k <= 
+             Length[$CellContext`permu], 
+             Increment[$CellContext`k], 
+             For[$CellContext`j = $CellContext`i, $CellContext`j >= 1, 
+               
+               Decrement[$CellContext`j], $CellContext`temp = 
+                Join[$CellContext`temp, {
+                   Insert[
+                    
+                    Part[$CellContext`permu, $CellContext`k], $CellContext`i, \
+$CellContext`j]}]; Null]; 
+             Null]; $CellContext`permu = $CellContext`temp; $CellContext`temp = \
+{}; Null]; Grid[$CellContext`permu]]; Typeset`initDone$$ = True),
+     SynchronousInitialization->True,
+     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+     UnsavedVariables:>{Typeset`initDone$$},
+     UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+    Deployed->True,
+    StripOnInput->False],
+   Manipulate`InterpretManipulate[1]]], "Output",
+  CellChangeTimes->{{3.7486947527163143`*^9, 3.7486947619172697`*^9}}]
+}], "Text",
+ CellChangeTimes->{{3.748690528211314*^9, 3.7486906241581078`*^9}, {
+  3.748690655017846*^9, 3.7486906633758383`*^9}, {3.748694791189152*^9, 
+  3.7486948097535157`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"findMax", "[", 
+     RowBox[{"list_", ",", "n_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"a", ",", "i", ",", "max", ",", "pos"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"a", "=", "list"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"max", "=", "0"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"pos", "=", "0"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", "n"}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+               "a", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+               "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+              "\[Equal]", "\"\<<\>\""}], "&&", 
+             RowBox[{"i", "\[NotEqual]", "1"}]}], ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                  "a", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+                   "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                 ">", "max"}], "&&", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                  "a", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+                   "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                 ">", 
+                 RowBox[{
+                  RowBox[{"a", "\[LeftDoubleBracket]", 
+                   RowBox[{"i", "-", "1"}], "\[RightDoubleBracket]"}], 
+                  "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}]}], 
+               ",", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"max", "=", 
+                 RowBox[{
+                  RowBox[{
+                  "a", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+                   "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+                ";", "\[IndentingNewLine]", 
+                RowBox[{"pos", "=", "i"}], ";"}]}], "\[IndentingNewLine]", 
+              "]"}], ";"}], "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                  "list", "\[LeftDoubleBracket]", "i", 
+                   "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "1", 
+                  "\[RightDoubleBracket]"}], "\[Equal]", "\"\<>\>\""}], "&&", 
+                RowBox[{"i", "\[NotEqual]", "n"}]}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "a", "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], ">", "max"}], "&&", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "a", "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], ">", 
+                    RowBox[{
+                    RowBox[{"a", "\[LeftDoubleBracket]", 
+                    RowBox[{"i", "+", "1"}], "\[RightDoubleBracket]"}], 
+                    "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}]}]}], ",", "\[IndentingNewLine]", 
+                  RowBox[{
+                   RowBox[{"max", "=", 
+                    RowBox[{
+                    RowBox[{
+                    "a", "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}]}], ";", "\[IndentingNewLine]", 
+                   RowBox[{"pos", "=", "i"}], ";"}]}], "\[IndentingNewLine]", 
+                 "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+           "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+        "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"pos", "\[Equal]", "0"}], "&&", 
+          RowBox[{"max", "\[Equal]", "0"}]}], ",", 
+         RowBox[{"Return", "[", "0", "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Return", "[", "pos", "]"}], ";"}]}], "\[IndentingNewLine]",
+         "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"perm", "[", 
+     RowBox[{"list_", ",", "n_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"a1", ",", "positionMax", ",", "max", ",", "i"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"a1", "=", "list"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"positionMax", "=", 
+        RowBox[{"findMax", "[", 
+         RowBox[{"a1", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"max", "=", 
+        RowBox[{
+        "a1", "\[LeftDoubleBracket]", "positionMax", 
+         "\[RightDoubleBracket]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+          "max", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+          "\[Equal]", "\"\<<\>\""}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+             "a1", "\[LeftDoubleBracket]", "positionMax", 
+              "\[RightDoubleBracket]"}], ",", 
+             RowBox[{"a1", "\[LeftDoubleBracket]", 
+              RowBox[{"positionMax", "-", "1"}], "\[RightDoubleBracket]"}]}], 
+            "}"}], "=", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"a1", "\[LeftDoubleBracket]", 
+              RowBox[{"positionMax", "-", "1"}], "\[RightDoubleBracket]"}], 
+             ",", 
+             RowBox[{
+             "a1", "\[LeftDoubleBracket]", "positionMax", 
+              "\[RightDoubleBracket]"}]}], "}"}]}], ";"}], 
+         "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+            "max", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+            "\[Equal]", "\"\<>\>\""}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+               "a1", "\[LeftDoubleBracket]", "positionMax", 
+                "\[RightDoubleBracket]"}], ",", 
+               RowBox[{"a1", "\[LeftDoubleBracket]", 
+                RowBox[{"positionMax", "+", "1"}], 
+                "\[RightDoubleBracket]"}]}], "}"}], "=", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"a1", "\[LeftDoubleBracket]", 
+                RowBox[{"positionMax", "+", "1"}], "\[RightDoubleBracket]"}], 
+               ",", 
+               RowBox[{
+               "a1", "\[LeftDoubleBracket]", "positionMax", 
+                "\[RightDoubleBracket]"}]}], "}"}]}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", "n"}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+              "a1", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+              "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], ">", 
+             RowBox[{
+             "max", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+            ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                 "a1", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+                  "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+                "\[Equal]", "\"\<<\>\""}], ",", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                 "a1", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+                  "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+                "=", "\"\<>\>\""}], ",", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    "a1", "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "1", 
+                    "\[RightDoubleBracket]"}], "\[Equal]", "\"\<>\>\""}], ",", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    "a1", "\[LeftDoubleBracket]", "i", 
+                    "\[RightDoubleBracket]"}], "\[LeftDoubleBracket]", "1", 
+                    "\[RightDoubleBracket]"}], "=", "\"\<<\>\""}]}], "]"}], 
+                ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+           "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+        "]"}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", "a1", "]"}], ";"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Johnson", "[", 
+     RowBox[{"a_", ",", "n_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"list", ",", "i", ",", "k", ",", "answer"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"list", "=", "a"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"answer", "=", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "<=", 
+          RowBox[{"n", "!"}]}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"answer", "=", 
+           RowBox[{"Insert", "[", 
+            RowBox[{"answer", ",", 
+             RowBox[{"StringJoin", "[", 
+              RowBox[{
+               RowBox[{"Function", "[", 
+                RowBox[{"x", ",", 
+                 RowBox[{
+                  RowBox[{"ToString", "[", 
+                   RowBox[{
+                   "x", "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], "]"}], "<>", "\"\< \>\""}]}], 
+                "]"}], "/@", "list"}], "]"}], ",", 
+             RowBox[{"-", "1"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"i", "\[NotEqual]", 
+             RowBox[{"n", "!"}]}], ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"list", "=", 
+              RowBox[{"perm", "[", 
+               RowBox[{"list", ",", "n"}], "]"}]}], ";"}]}], 
+           "\[IndentingNewLine]", "]"}]}]}], "\[IndentingNewLine]", "]"}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Length", "[", "answer", "]"}], ">", "1"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Return", "[", "answer", "]"}], ";"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Return", "[", 
+           RowBox[{"{", "1", "}"}], "]"}], ";"}]}], "\[IndentingNewLine]", 
+        "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"n", "=", "3"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"list", "=", 
+   RowBox[{
+    RowBox[{"Function", "[", 
+     RowBox[{"x", ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<<\>\"", ",", "x"}], "}"}]}], "]"}], "/@", 
+    RowBox[{"Range", "[", "n", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Johnson", "[", 
+  RowBox[{"list", ",", "n"}], "]"}]}], "Input",
+ CellChangeTimes->{
+  3.7492049032176123`*^9, {3.7492049767448177`*^9, 3.7492049796049814`*^9}, {
+   3.749205044886715*^9, 3.7492050510260663`*^9}, {3.749205141423237*^9, 
+   3.7492052200557346`*^9}, {3.749205291507821*^9, 3.7492052973541555`*^9}, {
+   3.749205353621374*^9, 3.749205500113753*^9}, {3.7492055914039745`*^9, 
+   3.7492055978413424`*^9}, {3.749267652788583*^9, 3.7492676732297516`*^9}, {
+   3.7492678583213387`*^9, 3.7492679339756656`*^9}}],
+
+Cell["", "Text"],
+
+Cell[TextData[StyleBox["Lexicographic Permutation Algorithm",
+ FontSize->24]], "Text",
+ CellChangeTimes->{{3.74926921699205*^9, 3.7492692321109147`*^9}, {
+  3.749269266890904*^9, 3.7492692750503707`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Design Algorithm", "Section",
+ CellChangeTimes->{{3.748690289895612*^9, 3.7486903237951975`*^9}}],
+
+Cell[TextData[{
+ "Express the decrease-(by-one)-and-conquer (bottom-up) algorithm to generate \
+all permutation of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "3", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "Text",
+ CellChangeTimes->{{3.7486903308409886`*^9, 3.748690371282404*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["Algorithm 1",
+  FontWeight->"Bold"],
+ " BottomUpPermu"
+}], "Text",
+ CellFrame->{{0, 0}, {0.5, 0.5}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550620172615*^9, 3.7455506261868258`*^9}, 
+   3.74555125568647*^9, {3.7486913038508167`*^9, 3.7486913105563354`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Input",
+  FontWeight->"Bold"],
+ ":\tA set of elements ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455506974200797`*^9}, 
+   3.74555125568647*^9, {3.7455524252798157`*^9, 3.7455524257958975`*^9}, {
+   3.74555247742437*^9, 3.7455524782366867`*^9}, {3.7486904483068886`*^9, 
+   3.7486904575859594`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Output",
+  FontWeight->"Bold"],
+ ": All permutations of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "...", ",", "n"}], TraditionalForm]]]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507897609525`*^9}, 
+   3.74555125568647*^9, 3.745552387289302*^9, {3.745552417344702*^9, 
+   3.745552419219309*^9}, 3.7455526470849285`*^9, {3.748690467666794*^9, 
+   3.748690478258057*^9}}],
+
+Cell["", "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507914006433`*^9}, 
+   3.74555125568647*^9}],
+
+Cell[TextData[{
+ StyleBox["while",
+  FontWeight->"Bold"],
+ " there are last 2 permutation ",
+ StyleBox["do",
+  FontWeight->"Bold"]
+}], "ItemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492694850813837`*^9, 3.749269492600814*^9}, {
+   3.7492695777956867`*^9, 3.74926959516468*^9}, {3.7492699877791367`*^9, 
+   3.7492700254762926`*^9}}],
+
+Cell[TextData[{
+ StyleBox["find",
+  FontWeight->"Bold"],
+ " the largest ",
+ StyleBox["i",
+  FontWeight->"Bold"],
+ " that A[ ",
+ StyleBox["i ",
+  FontWeight->"Bold"],
+ "]<A[ ",
+ StyleBox["i+1 ",
+  FontWeight->"Bold"],
+ "]               ",
+ StyleBox[" // If there is no x, this list is the lastest permutation",
+  FontSlant->"Italic",
+  FontColor->GrayLevel[0.5]]
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492694850813837`*^9, 3.749269492600814*^9}, {
+   3.7492695777956867`*^9, 3.7492696182700014`*^9}, {3.7492697392669225`*^9, 
+   3.7492698319142213`*^9}, {3.7492701246029625`*^9, 3.7492701546286793`*^9}}],
+
+Cell[TextData[{
+ StyleBox["find",
+  FontWeight->"Bold"],
+ " the largest ",
+ StyleBox["j",
+  FontWeight->"Bold"],
+ " that A[ ",
+ StyleBox["i ",
+  FontWeight->"Bold"],
+ "]<A[ ",
+ StyleBox["y ",
+  FontWeight->"Bold"],
+ "]"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492694850813837`*^9, 3.749269492600814*^9}, {
+   3.7492695777956867`*^9, 3.7492696182700014`*^9}, {3.7492697392669225`*^9, 
+   3.749269853761471*^9}, {3.749270132900437*^9, 3.7492701640282173`*^9}}],
+
+Cell[TextData[{
+ StyleBox["swap",
+  FontWeight->"Bold"],
+ " ( A[ ",
+ StyleBox["i ",
+  FontWeight->"Bold"],
+ "] , A[ ",
+ StyleBox["j ",
+  FontWeight->"Bold"],
+ "] )"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492694850813837`*^9, 3.749269492600814*^9}, {
+   3.7492695777956867`*^9, 3.7492696182700014`*^9}, {3.7492697392669225`*^9, 
+   3.749269871450483*^9}, {3.749270167708428*^9, 3.749270190109709*^9}}],
+
+Cell[TextData[{
+ StyleBox["reverse",
+  FontWeight->"Bold"],
+ " A[ ",
+ StyleBox["i+1 ... n ",
+  FontWeight->"Bold"],
+ "]"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492694850813837`*^9, 3.749269492600814*^9}, {
+   3.7492695777956867`*^9, 3.7492696182700014`*^9}, {3.7492697392669225`*^9, 
+   3.7492699012521873`*^9}, {3.7492701778130054`*^9, 3.7492701868255215`*^9}}],
+
+Cell[TextData[{
+ StyleBox["add",
+  FontWeight->"Bold"],
+ " new permutation to the answer\[CloseCurlyQuote]s list"
+}], "SubitemParagraph",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.745550650087454*^9, 3.7455507916667576`*^9}, 
+   3.74555125568647*^9, {3.7492694850813837`*^9, 3.749269492600814*^9}, {
+   3.7492695777956867`*^9, 3.7492696182700014`*^9}, {3.7492697392669225`*^9, 
+   3.7492699284127407`*^9}, {3.7492699643477964`*^9, 3.7492699709991765`*^9}}],
+
+Cell["", "Text",
+ CellFrame->{{0, 0}, {0.5, 0}},
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.7455513792846923`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Explaination", "Subsection",
+ CellChangeTimes->{{3.745061675672035*^9, 3.7450616884680214`*^9}}],
+
+Cell[TextData[StyleBox["\t\:0e43\:0e19\:0e01\:0e32\:0e23\:0e2b\:0e32 \
+permutation \:0e42\:0e14\:0e22\:0e27\:0e34\:0e18\:0e35 lexicographic \:0e08\
+\:0e30\:0e17\:0e33\:0e01\:0e32\:0e23\:0e2b\:0e32 \:0e15\:0e33\:0e41\:0e2b\
+\:0e19\:0e48\:0e07 i\:0e17\:0e35\:0e48\:0e21\:0e32\:0e01\:0e17\:0e35\:0e48\
+\:0e2a\:0e38\:0e14\:0e17\:0e35\:0e48 A[i]<A[i+1]\n\:0e16\:0e49\:0e32\:0e44\
+\:0e21\:0e48\:0e21\:0e35 i \:0e43\:0e14\:0e46\:0e17\:0e35\:0e48\:0e15\:0e23\
+\:0e07\:0e01\:0e31\:0e1a\:0e40\:0e07\:0e37\:0e48\:0e2d\:0e19\:0e44\:0e02\:0e19\
+\:0e35\:0e49\:0e41\:0e2a\:0e14\:0e07 list A \:0e40\:0e1b\:0e47\:0e19 \
+permutation \
+\:0e25\:0e33\:0e14\:0e31\:0e1a\:0e2a\:0e38\:0e14\:0e17\:0e49\:0e32\:0e22\:0e43\
+\:0e19\:0e01\:0e32\:0e23\:0e2b\:0e32\:0e41\:0e25\:0e49\:0e27\n\:0e2b\:0e25\
+\:0e31\:0e07\:0e08\:0e32\:0e01\:0e19\:0e31\:0e49\:0e19\:0e08\:0e30\:0e44\:0e1b\
+\:0e2b\:0e32\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07 j \:0e17\:0e35\:0e48\
+\:0e21\:0e32\:0e01\:0e17\:0e35\:0e48\:0e2a\:0e38\:0e14\:0e17\:0e35\:0e48 \
+A[i]<A[j] \:0e41\:0e25\:0e49\:0e27\:0e08\:0e30\:0e17\:0e33\:0e01\:0e32\:0e23\
+\:0e2a\:0e25\:0e31\:0e1a\:0e15\:0e33\:0e41\:0e2b\:0e19\:0e48\:0e07 A[i],A[j] \
+\:0e40\:0e2a\:0e23\:0e47\:0e08\:0e41\:0e25\:0e49\:0e27\:0e08\:0e30\:0e17\:0e33\
+\:0e01\:0e32\:0e23 reverse list\n\:0e15\:0e31\:0e49\:0e07\:0e41\:0e15\:0e48\
+\:0e15\:0e31\:0e27\:0e16\:0e31\:0e14\:0e08\:0e32\:0e01 i \:0e17\:0e35\:0e48\
+\:0e40\:0e23\:0e32\:0e2b\:0e32\:0e21\:0e32\:0e44\:0e14\:0e49\:0e44\:0e1b\:0e08\
+\:0e19\:0e16\:0e36\:0e07\:0e15\:0e31\:0e27\:0e2a\:0e38\:0e14\:0e17\:0e49\:0e32\
+\:0e22 \:0e40\:0e23\:0e32\:0e01\:0e47\:0e08\:0e30\:0e44\:0e14\:0e49 list \
+\:0e17\:0e35\:0e48\:0e40\:0e1b\:0e47\:0e19 1 \:0e43\:0e19 permutation \:0e21\
+\:0e32\:0e41\:0e25\:0e49\:0e27\n\t\:0e08\:0e30\:0e17\:0e33\:0e01\:0e32\:0e23\
+\:0e27\:0e19\:0e23\:0e2d\:0e1a\:0e2b\:0e32\:0e44\:0e1b\:0e40\:0e23\:0e37\:0e48\
+\:0e2d\:0e22\:0e46\:0e08\:0e19\:0e01\:0e27\:0e48\:0e32\:0e08\:0e30\:0e2b\:0e32\
+ permutation \:0e17\:0e31\:0e49\:0e07\:0e2b\:0e21\:0e14\:0e04\:0e23\:0e1a",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.745061734263156*^9, 3.7450617381220756`*^9}, 
+   3.7492674438576326`*^9, 3.7492705638360853`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Section",
+ CellChangeTimes->{{3.7486905118391304`*^9, 3.7486905147292566`*^9}}],
+
+Cell[TextData[{
+ "Implement the decrease-(by-one)-and-conquer algorithm to generate all \
+permutations of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", ",", "2", ",", "3", ",", "...", ",", "n"}], TraditionalForm]]],
+ ", where ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " is the input value from the user. The program should successively print \
+out all permutations, starting from those with one element, two elements, and \
+finally ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " elements.\nAn example run of the program is shown below:\n",
+ Cell[BoxData[
+  TagBox[
+   StyleBox[
+    DynamicModuleBox[{$CellContext`n$$ = 0, Typeset`show$$ = True, 
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+     "\"untitled\"", Typeset`specs$$ = {{
+       Hold[$CellContext`n$$], 2}}, Typeset`size$$ = {8., {1.5, 8.5}}, 
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+     False}, 
+     DynamicBox[Manipulate`ManipulateBoxes[
+      1, StandardForm, "Variables" :> {$CellContext`n$$ = 2}, 
+       "ControllerVariables" :> {}, 
+       "OtherVariables" :> {
+        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+         Typeset`specs$$, Typeset`size$$, Typeset`update$$, 
+         Typeset`initDone$$, Typeset`skipInitDone$$}, 
+       "Body" :> $CellContext`BottomUpPermu[$CellContext`n$$], 
+       "Specifications" :> {{$CellContext`n$$, 2}}, "Options" :> {}, 
+       "DefaultOptions" :> {}],
+      ImageSizeCache->{258., {48., 55.}},
+      SingleEvaluation->True],
+     Deinitialization:>None,
+     DynamicModuleValues:>{},
+     Initialization:>($CellContext`BottomUpPermu[
+         Pattern[$CellContext`n, 
+          Blank[Integer]]] := 
+       Module[{$CellContext`i, $CellContext`j, $CellContext`k, \
+$CellContext`permu = {{1}}, $CellContext`temp = {}}, 
+         For[$CellContext`i = 2, $CellContext`i <= $CellContext`n, 
+           Increment[$CellContext`i], 
+           For[$CellContext`k = 1, $CellContext`k <= 
+             Length[$CellContext`permu], 
+             Increment[$CellContext`k], 
+             For[$CellContext`j = $CellContext`i, $CellContext`j >= 1, 
+               
+               Decrement[$CellContext`j], $CellContext`temp = 
+                Join[$CellContext`temp, {
+                   Insert[
+                    
+                    Part[$CellContext`permu, $CellContext`k], $CellContext`i, \
+$CellContext`j]}]; Null]; 
+             Null]; $CellContext`permu = $CellContext`temp; $CellContext`temp = \
+{}; Null]; Grid[$CellContext`permu]]; Typeset`initDone$$ = True),
+     SynchronousInitialization->True,
+     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+     UnsavedVariables:>{Typeset`initDone$$},
+     UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+    Deployed->True,
+    StripOnInput->False],
+   Manipulate`InterpretManipulate[1]]], "Output",
+  CellChangeTimes->{{3.7486947527163143`*^9, 3.7486947619172697`*^9}}]
+}], "Text",
+ CellChangeTimes->{{3.748690528211314*^9, 3.7486906241581078`*^9}, {
+  3.748690655017846*^9, 3.7486906633758383`*^9}, {3.748694791189152*^9, 
+  3.7486948097535157`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"lexicographic", "[", 
+    RowBox[{"a_", ",", "n_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "list", ",", "i", ",", "j", ",", "largestI", ",", "largestJ", ",", 
+       "endList"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"list", "=", "a"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"i", "=", "0"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"While", "[", 
+       RowBox[{"True", ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Print", "[", "list", "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"largestI", "=", "0"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"i", "=", "1"}], ",", 
+           RowBox[{"i", "\[LessEqual]", 
+            RowBox[{"n", "-", "1"}]}], ",", 
+           RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+               "list", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+                "<", 
+               RowBox[{"list", "\[LeftDoubleBracket]", 
+                RowBox[{"i", "+", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+              RowBox[{"largestI", "=", "i"}]}], "]"}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"largestI", "\[Equal]", "0"}], ",", 
+           RowBox[{"Break", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+         "\[IndentingNewLine]", 
+         RowBox[{"largestJ", "=", "0"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"j", "=", "1"}], ",", 
+           RowBox[{"j", "\[LessEqual]", "n"}], ",", 
+           RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+               "list", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}],
+                ">", 
+               RowBox[{
+               "list", "\[LeftDoubleBracket]", "largestI", 
+                "\[RightDoubleBracket]"}]}], ",", 
+              RowBox[{"largestJ", "=", "j"}]}], "]"}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "list", "\[LeftDoubleBracket]", "largestI", 
+             "\[RightDoubleBracket]"}], ",", 
+            RowBox[{
+            "list", "\[LeftDoubleBracket]", "largestJ", 
+             "\[RightDoubleBracket]"}]}], "}"}], "=", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "list", "\[LeftDoubleBracket]", "largestJ", 
+             "\[RightDoubleBracket]"}], ",", 
+            RowBox[{
+            "list", "\[LeftDoubleBracket]", "largestI", 
+             "\[RightDoubleBracket]"}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"list", "=", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{"Take", "[", 
+             RowBox[{"list", ",", "largestI"}], "]"}], ",", 
+            RowBox[{"Reverse", "[", 
+             RowBox[{"Drop", "[", 
+              RowBox[{"list", ",", "largestI"}], "]"}], "]"}]}], "]"}]}], 
+         ";"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}], 
+      ";"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"n", "=", "4"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"list", "=", 
+   RowBox[{"Range", "[", "n", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"lexicographic", "[", 
+   RowBox[{"list", ",", "n"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{
+  3.7492049032176123`*^9, {3.7492049767448177`*^9, 3.7492049796049814`*^9}, {
+   3.749205044886715*^9, 3.7492050510260663`*^9}, {3.749205141423237*^9, 
+   3.7492052200557346`*^9}, {3.749205291507821*^9, 3.7492052973541555`*^9}, {
+   3.749205353621374*^9, 3.749205500113753*^9}, {3.7492055914039745`*^9, 
+   3.7492055978413424`*^9}, {3.749267652788583*^9, 3.7492676732297516`*^9}, {
+   3.7492690312984285`*^9, 3.749269033904578*^9}, {3.7492693628343916`*^9, 
+   3.749269414934372*^9}}],
+
+Cell["", "Text"],
+
+Cell["", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Evaluation", "Subsection",
+ CellChangeTimes->{{3.745061721730895*^9, 3.7450617238405895`*^9}}],
+
+Cell["Explain here.", "Text",
+ CellChangeTimes->{{3.745061740137463*^9, 3.745061742152867*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{913, 670},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (September 9, 2014)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "WindowsThai"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 159, 2, 99, "Title"],
+Cell[742, 26, 120, 1, 36, "Subtitle"],
+Cell[865, 29, 16, 0, 30, "Text"],
+Cell[884, 31, 250, 4, 41, "Text"],
+Cell[CellGroupData[{
+Cell[1159, 39, 103, 1, 72, "Section"],
+Cell[1265, 42, 302, 7, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1592, 53, 323, 8, 47, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[1918, 63, 563, 14, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[2484, 79, 556, 14, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[3043, 95, 201, 4, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[3247, 101, 201, 4, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[3451, 107, 145, 3, 38, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3633, 115, 102, 1, 37, "Subsection"],
+Cell[3738, 118, 125, 2, 30, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3912, 126, 103, 1, 72, "Section"],
+Cell[4018, 129, 3258, 71, 201, "Text"],
+Cell[7279, 202, 479, 7, 40, "Input"],
+Cell[7761, 211, 16, 0, 30, "Text"],
+Cell[7780, 213, 205, 3, 41, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8022, 221, 103, 1, 72, "Section"],
+Cell[8128, 224, 361, 8, 49, "Text"],
+Cell[CellGroupData[{
+Cell[8514, 236, 379, 9, 47, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[8896, 247, 530, 13, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[9429, 262, 523, 13, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[9955, 277, 251, 4, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[10209, 283, 367, 10, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[10579, 295, 339, 5, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[10921, 302, 499, 13, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[11423, 317, 471, 10, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[11897, 329, 517, 10, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[12417, 341, 145, 3, 38, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12599, 349, 102, 1, 37, "Subsection"],
+Cell[12704, 352, 4101, 55, 242, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16854, 413, 103, 1, 72, "Section"],
+Cell[16960, 416, 3258, 71, 201, "Text"],
+Cell[20221, 489, 13194, 312, 1381, "Input"],
+Cell[33418, 803, 16, 0, 30, "Text"],
+Cell[33437, 805, 204, 3, 41, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33678, 813, 103, 1, 72, "Section"],
+Cell[33784, 816, 302, 7, 30, "Text"],
+Cell[CellGroupData[{
+Cell[34111, 827, 323, 8, 47, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[34437, 837, 530, 13, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[34970, 852, 523, 13, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[35496, 867, 201, 4, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[35700, 873, 480, 12, 21, "ItemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[36183, 887, 767, 22, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[36953, 911, 621, 19, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[37577, 932, 564, 16, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[38144, 950, 526, 13, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[38673, 965, 519, 10, 21, "SubitemParagraph",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[39195, 977, 145, 3, 38, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39377, 985, 102, 1, 37, "Subsection"],
+Cell[39482, 988, 2167, 29, 137, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41698, 1023, 103, 1, 72, "Section"],
+Cell[41804, 1026, 3258, 71, 201, "Text"],
+Cell[45065, 1099, 4324, 101, 501, "Input"],
+Cell[49392, 1202, 16, 0, 30, "Text"],
+Cell[49411, 1204, 16, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[49452, 1208, 100, 1, 37, "Subsection"],
+Cell[49555, 1211, 95, 1, 30, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
